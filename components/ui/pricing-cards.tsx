@@ -1,8 +1,7 @@
-import { Check, MoveRight, PhoneCall } from "lucide-react";
+import { Check} from "lucide-react";
 import {
     Card,
     CardContent,
-    CardDescription,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";

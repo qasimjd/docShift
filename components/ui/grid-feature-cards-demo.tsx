@@ -45,7 +45,7 @@ export default function DemoOne() {
 						Why DocSift?
 					</h2>
 					<p className="text-muted-foreground mt-4 text-sm tracking-wide text-balance md:text-base">
-						Reading takes time. Understanding takes effort. DocSift saves both. Whether you're a student, a legal professional, or a business owner, DocSift gives you instant insights from any document.
+						Reading takes time. Understanding takes effort. DocSift saves both. Whether you&apos;re a student, a legal professional, or a business owner, DocSift gives you instant insights from any document.
 					</p>
 				</AnimatedContainer>
 
