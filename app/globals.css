@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+html {
+  scroll-behavior: smooth;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -58,7 +62,7 @@
 }
 
 :root {
-  --background: rgb(255, 248, 245);
+  --background: rgb(255, 249, 247);
   --foreground: rgb(51, 51, 51);
   --card: rgb(255, 255, 255);
   --card-foreground: rgb(51, 51, 51);
@@ -69,7 +73,7 @@
   --primary-foreground: rgb(255, 255, 255);
   --secondary: rgb(243, 244, 246);
   --secondary-foreground: rgb(75, 85, 99);
-  --muted: rgb(255, 239, 230);
+  --muted: rgb(255, 246, 240);
   --muted-foreground: rgb(107, 114, 128);
   --accent: rgb(214, 228, 240);
   --accent-foreground: rgb(30, 58, 138);

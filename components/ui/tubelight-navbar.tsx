@@ -1,9 +1,9 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { LucideIcon, Zap } from "lucide-react"
+import { LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import ThemeTogel from "../ThemeTogel"
@@ -20,8 +20,77 @@ interface NavBarProps {
     className?: string
 }
 
-export function NavBar({ items, className }: NavBarProps) {
+export function NavBar({ items }: NavBarProps) {
     const [activeTab, setActiveTab] = useState(items[0].name)
+
+    // Track scroll position to update active tab
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollPosition = window.scrollY + 100 // Offset for navbar height
+
+            // Check if we're at the top of the page
+            if (scrollPosition < 200) {
+                setActiveTab(items[0].name) // Set to "Home"
+                return
+            }
+
+            // Check each section
+            const sections = items.slice(1).map(item => ({
+                name: item.name,
+                element: item.url.startsWith('#') ? document.querySelector(item.url) : null
+            }))
+
+            for (const section of sections) {
+                if (section.element) {
+                    const rect = section.element.getBoundingClientRect()
+                    const elementTop = rect.top + window.pageYOffset
+                    const elementBottom = elementTop + rect.height
+
+                    if (scrollPosition >= elementTop - 200 && scrollPosition < elementBottom - 200) {
+                        setActiveTab(section.name)
+                        break
+                    }
+                }
+            }
+        }
+
+        // Add scroll event listener
+        window.addEventListener('scroll', handleScroll)
+        
+        // Check initial position
+        handleScroll()
+
+        // Cleanup
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [items])
+
+    const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, url: string) => {
+        // Only handle smooth scroll for anchor links (starting with #)
+        if (url.startsWith('#')) {
+            e.preventDefault()
+            
+            // Handle home navigation
+            if (url === '#') {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                })
+                return
+            }
+            
+            // Handle other section navigation
+            const target = document.querySelector(url)
+            if (target) {
+                const navbarHeight = 80 // Approximate navbar height
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navbarHeight
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                })
+            }
+        }
+    }
 
     return (
         <>
@@ -45,9 +114,9 @@ export function NavBar({ items, className }: NavBarProps) {
             </div>
 
             {/* Mobile Bottom Navigation */}
-            <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden mb-6 px-6">
+            <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden mb-4 px-6">
                 <div className="flex items-center justify-center">
-                    <div className="flex items-center gap-3 bg-background/5 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
+                    <div className="flex items-center gap-4 bg-background/5 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
                         {items.map((item) => {
                             const Icon = item.icon
                             const isActive = activeTab === item.name
@@ -56,11 +125,13 @@ export function NavBar({ items, className }: NavBarProps) {
                                 <Link
                                     key={item.name}
                                     href={item.url}
-                                    onClick={() => setActiveTab(item.name)}
+                                    onClick={(e) => {
+                                        handleSmoothScroll(e, item.url)
+                                    }}
                                     className={cn(
-                                        "relative cursor-pointer text-sm font-semibold px-6 py-2 rounded-full transition-colors",
+                                        "relative cursor-pointer text-sm font-semibold px-4 py-2 rounded-full transition-colors",
                                         "text-foreground/80 hover:text-primary",
-                                        isActive && "bg-muted text-primary",
+                                        isActive && "bg-background/5 border border-border backdrop-blur-lg from-brand to-brand-foreground text-black dark:text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200",
                                     )}
                                 >
                                     <Icon size={18} strokeWidth={2.5} />
@@ -105,11 +176,13 @@ export function NavBar({ items, className }: NavBarProps) {
                                 <Link
                                     key={item.name}
                                     href={item.url}
-                                    onClick={() => setActiveTab(item.name)}
+                                    onClick={(e) => {
+                                        handleSmoothScroll(e, item.url)
+                                    }}
                                     className={cn(
                                         "relative cursor-pointer text-sm font-semibold px-6 py-2 rounded-full transition-colors",
                                         "text-foreground/80 hover:text-primary",
-                                        isActive && "bg-muted text-primary",
+                                        isActive && "bg-background/5 border border-border backdrop-blur-lg from-brand to-brand-foreground text-black dark:text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200",
                                     )}
                                 >
                                     <span className="inline">{item.name}</span>

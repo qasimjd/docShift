@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 const testimonials = [
   {
     text: "DocSift saves me hours every week. It's like having a personal analyst on call.",
-    image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
+    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2lybCUyMGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D",
     name: "Emma L.",
     role: "Startup Founder",
   },
@@ -66,7 +66,7 @@ const thirdColumn = testimonials.slice(6, 9);
 
 const Testimonials = () => {
   return (
-    <section className="bg-background my-20 relative">
+    <section className="bg-background py-16 md:py-28 relative" id="testimonials">
       <div className="container z-10 mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -75,10 +75,6 @@ const Testimonials = () => {
           viewport={{ once: true }}
           className="flex flex-col items-center justify-center max-w-[540px] mx-auto"
         >
-          <div className="flex justify-center">
-            <div className="border py-1 px-4 rounded-lg">Testimonials</div>
-          </div>
-
           <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tighter mt-5">
             What our users say
           </h2>
