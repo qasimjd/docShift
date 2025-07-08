@@ -66,8 +66,13 @@ function GridPattern({
 
 function genRandomPattern(length?: number): number[][] {
 	length = length ?? 5;
-	return Array.from({ length }, () => [
-		Math.floor(Math.random() * 4) + 7, // random x between 7 and 10
-		Math.floor(Math.random() * 6) + 1, // random y between 1 and 6
-	]);
+	// Use a static pattern to avoid hydration mismatch
+	// This ensures server and client render the same pattern
+	const staticPatterns = [
+		[7, 1], [8, 3], [9, 2], [10, 5], [7, 4],
+		[8, 1], [9, 6], [10, 2], [7, 3], [8, 5],
+		[9, 1], [10, 4], [7, 6], [8, 2], [9, 3]
+	];
+	
+	return staticPatterns.slice(0, length);
 }

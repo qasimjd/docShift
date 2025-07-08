@@ -2,15 +2,19 @@
 
 import { HeroSection } from "@/components/ui/hero-section"
 import { Icons } from "@/components/ui/icons"
+import { useUser } from "@clerk/nextjs"
+
 
 export function HeroSectionDemo() {
+
+  const { user } = useUser();
   return (
     <HeroSection
       badge={{
         text: "Now live in beta!",
         action: {
           text: "Try it free",
-          href: "/signup",
+          href: user ? "/dashboard" : "/sign-up",
         },
       }}
       title="Summarize Any Document in Seconds"
@@ -18,7 +22,7 @@ export function HeroSectionDemo() {
       actions={[
         {
           text: "Get Started Free",
-          href: "/signup",
+          href: user ? "/dashboard" : "/sign-up",
           variant: "pcolor",
         },
         {
@@ -29,8 +33,8 @@ export function HeroSectionDemo() {
         },
       ]}
       image={{
-        light: "/a.png",
-        dark: "/b.png",
+        light: "/light.png",
+        dark: "/dark.png",
         alt: "DocSift Summary Preview",
       }}
     />

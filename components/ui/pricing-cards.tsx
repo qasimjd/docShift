@@ -48,7 +48,7 @@ function Pricing({
                     {plans.map((plan, index) => (
                         <Card
                             key={index}
-                            className={`w-full bg-muted rounded-md flex flex-col ${plan.isPopular ? 'shadow-2xl ring-2 ring-primary' : ''}`}
+                            className={`w-full bg-muted backdrop-blur-lg shadow-lg hover:shadow-xl transform hover:scale-103 transition-all duration-200 rounded-md flex flex-col ${plan.isPopular ? 'shadow-2xl ring-2 ring-primary' : ''}`}
                         >
                             <CardHeader>
                                 <CardTitle>
