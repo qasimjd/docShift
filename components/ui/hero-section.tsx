@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRightIcon } from "lucide-react";
@@ -42,8 +43,19 @@ export function HeroSection({
     actions,
     image,
 }: HeroProps) {
-    const { resolvedTheme } = useTheme();
-    const imageSrc = resolvedTheme === "light" ? image.light : image.dark;
+    const { resolvedTheme, systemTheme } = useTheme();
+    const [mounted, setMounted] = React.useState(false);
+
+    React.useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    // During SSR and initial client render, use light theme to prevent hydration mismatch
+    const imageSrc = mounted 
+        ? (resolvedTheme === "dark" || (resolvedTheme === "system" && systemTheme === "dark")) 
+            ? image.dark 
+            : image.light
+        : image.light;
 
     return (
         <section

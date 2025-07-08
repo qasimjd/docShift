@@ -8,6 +8,14 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import ThemeTogel from "../ThemeTogel"
 import Logo from "../logo"
+import {
+    ClerkProvider,
+    SignInButton,
+    SignUpButton,
+    SignedIn,
+    SignedOut,
+    UserButton,
+} from '@clerk/nextjs'
 
 interface NavItem {
     name: string
@@ -23,18 +31,15 @@ interface NavBarProps {
 export function NavBar({ items }: NavBarProps) {
     const [activeTab, setActiveTab] = useState(items[0].name)
 
-    // Track scroll position to update active tab
     useEffect(() => {
         const handleScroll = () => {
             const scrollPosition = window.scrollY + 100 // Offset for navbar height
 
-            // Check if we're at the top of the page
             if (scrollPosition < 200) {
                 setActiveTab(items[0].name) // Set to "Home"
                 return
             }
 
-            // Check each section
             const sections = items.slice(1).map(item => ({
                 name: item.name,
                 element: item.url.startsWith('#') ? document.querySelector(item.url) : null
@@ -54,22 +59,17 @@ export function NavBar({ items }: NavBarProps) {
             }
         }
 
-        // Add scroll event listener
         window.addEventListener('scroll', handleScroll)
-        
-        // Check initial position
+
         handleScroll()
 
-        // Cleanup
         return () => window.removeEventListener('scroll', handleScroll)
     }, [items])
 
     const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, url: string) => {
-        // Only handle smooth scroll for anchor links (starting with #)
         if (url.startsWith('#')) {
             e.preventDefault()
-            
-            // Handle home navigation
+
             if (url === '#') {
                 window.scrollTo({
                     top: 0,
@@ -77,13 +77,12 @@ export function NavBar({ items }: NavBarProps) {
                 })
                 return
             }
-            
-            // Handle other section navigation
+
             const target = document.querySelector(url)
             if (target) {
                 const navbarHeight = 80 // Approximate navbar height
                 const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navbarHeight
-                
+
                 window.scrollTo({
                     top: targetPosition,
                     behavior: 'smooth'
@@ -99,16 +98,23 @@ export function NavBar({ items }: NavBarProps) {
                 <div className="flex items-center justify-between px-6 py-3">
                     <Link href="/" className="font-bold text-primary bg-background/5 border border-border backdrop-blur-lg from-brand to-brand-foregroun shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 rounded-lg flex items-center py-1 px-2 gap-1">
                         <Logo width={22} height={22} className="inline-block" />
-                        <span className="">DocSift </span>
+                        <span>DocSift</span>
                     </Link>
                     <div className="flex items-center gap-2">
                         <ThemeTogel />
-                        <Button
-                            variant="glow"
-                            className="flex items-center gap-2 px-4 py-2 rounded-full"
-                            onClick={() => alert("Sign In Clicked")} >
-                            Sign In
-                        </Button>
+
+                        <SignedOut>
+                            <Button variant="glow" asChild className="rounded-full">
+                                <Link href="/sign-in">
+                                    Sign-In
+                                </Link>
+                            </Button>
+                        </SignedOut>
+
+                        <SignedIn>
+                            <UserButton />
+                        </SignedIn>
+
                     </div>
                 </div>
             </div>
@@ -163,9 +169,9 @@ export function NavBar({ items }: NavBarProps) {
             {/* Desktop Navigation */}
             <div className="hidden lg:block fixed top-0 left-0 right-0 z-50 pt-6 px-6">
                 <div className="flex items-center justify-between max-w-5xl mx-auto w-full">
-                    <Link href="/" className="text-lg font-bold text-primary bg-background/5 border border-border backdrop-blur-lg from-brand to-brand-foregroun shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 rounded-lg flex items-center px-4 gap-1">
-                        <Logo width={44} height={44} className="inline-block" />
-                        <span className="">DocSift </span>
+                    <Link href="/" className="flex items-center justify-center text-lg font-bold text-primary bg-background/5 border border-border backdrop-blur-lg from-brand to-brand-foregroun shadow-lg rounded-full px-3">
+                        <Logo width={40} height={40} className="inline-block" />
+                        <span>DocSift</span>
                     </Link>
 
                     <div className="flex items-center gap-3 bg-background/5 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
@@ -210,12 +216,18 @@ export function NavBar({ items }: NavBarProps) {
                     </div>
                     <div className="flex items-center gap-2">
                         <ThemeTogel />
-                        <Button
-                            variant="glow"
-                            className="flex items-center gap-2 px-4 py-2 rounded-full"
-                            onClick={() => alert("Sign In Clicked")} >
-                            Sign In
-                        </Button>
+                        <SignedOut>
+                            <Button variant="glow" asChild className="rounded-full">
+                                <Link href="/sign-in">
+                                    Sign-In
+                                </Link>
+                            </Button>
+                        </SignedOut>
+
+                        <SignedIn>
+                            <UserButton />
+                        </SignedIn>
+
                     </div>
                 </div>
             </div>
