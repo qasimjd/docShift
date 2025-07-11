@@ -7,7 +7,7 @@ function FooterDemo() {
     <div className="w-full py-12">
       <Footer
         logo={<Logo className="h-6 w-auto" />}
-        brandName="DocShift"
+        brandName="DocSift"
         socialLinks={[
           {
             icon: <Github className="h-5 w-5" />,
@@ -31,7 +31,7 @@ function FooterDemo() {
           { href: "/cookies", label: "Cookie Policy" },
         ]}
         copyright={{
-          text: "© 2025 DocShift",
+          text: "© 2025 DocSift",
           license: "Transform your documents with AI",
         }}
       />

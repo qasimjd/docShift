@@ -1,7 +1,7 @@
-import FileUpload from '@/components/FileUpload'
 import ContributorsOverviewTable from '@/components/ui/contributors-overview-table'
 import ActivityWrapper from '@/components/ActivityWrapper'
 import { CreditInfo } from '@/components/ui/activity-card'
+import FileUploadSection from '@/components/FileUploadSection'
 
 const page = () => {
 
@@ -12,6 +12,8 @@ const page = () => {
         resetDate: "Jan 15, 2025"
     };
 
+
+
     return (
         <>
             {/* Main Content */}
@@ -19,10 +21,12 @@ const page = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6">
                     {/* Left Column - File Upload & Statistics */}
                     <div className="space-y-6 col-span-2 sm:space-y-8">
+
                         {/* File Upload Section */}
                         <section className="w-full">
-                            <FileUpload />
+                            <FileUploadSection />
                         </section>
+
                         {/* Statistics Card */}
                         <section className="w-full">
                             <ActivityWrapper

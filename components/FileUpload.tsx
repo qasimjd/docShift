@@ -591,7 +591,7 @@ export default function FileUpload({
                                         <button
                                             type="button"
                                             onClick={triggerFileInput}
-                                            className="w-4/5 flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-secondary transition-all duration-200 hover:bg-primary/90 group"
+                                            className="w-4/5 cursor-pointer flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-secondary transition-all duration-200 hover:bg-primary/90 group"
                                         >
                                             <span>Upload File</span>
                                             <UploadCloud className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
@@ -636,7 +636,7 @@ export default function FileUpload({
                                                         file?.size || 0
                                                     )}
                                                 </span>
-                                                <span className="font-medium text-blue-500">
+                                                <span className="font-medium text-orange-500">
                                                     {Math.round(progress)}%
                                                 </span>
                                             </div>
@@ -645,7 +645,7 @@ export default function FileUpload({
                                         <button
                                             onClick={resetState}
                                             type="button"
-                                            className="w-4/5 flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-secondary transition-all duration-200 hover:bg-primary/80"
+                                            className="w-4/5 cursor-pointer flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-secondary transition-all duration-200 hover:bg-primary/80"
                                         >
                                             Cancel
                                         </button>

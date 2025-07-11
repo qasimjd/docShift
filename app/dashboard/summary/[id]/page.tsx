@@ -1,5 +1,5 @@
 import React from 'react'
-import { FileText, ArrowBigLeft } from 'lucide-react'
+import { ArrowBigLeft } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link';
@@ -25,10 +25,10 @@ const summaryPage = async ({ params }: { params: Promise<{ id?: string }> }) => 
             {/* Header */}
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold text-foreground">Document Details</h1>
-                <Button variant="glow" asChild>
+                <Button variant="link" asChild>
                     <Link href="/dashboard">
                         <ArrowBigLeft className="h-4 w-4" />
-                        Back to Dashboard
+                        Back
                     </Link>
                 </Button>
             </div>

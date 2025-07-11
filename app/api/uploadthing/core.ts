@@ -1,0 +1,62 @@
+import { currentUser } from "@clerk/nextjs/server";
+import { createUploadthing, type FileRouter } from "uploadthing/next";
+import { UploadThingError } from "uploadthing/server";
+
+const f = createUploadthing();
+
+
+// FileRouter for your app, can contain multiple FileRoutes
+export const ourFileRouter = {
+  // Define as many FileRoutes as you like, each with a unique routeSlug
+  pdfUploader: f({
+    pdf: {
+      maxFileSize: "32MB",
+      maxFileCount: 1,
+    },
+  })
+    // Set permissions and file types for this FileRoute
+    .middleware(async ({ req }) => {
+      // This code runs on your server before upload
+      console.log("UploadThing middleware executing...");
+      
+      try {
+        const user = await currentUser();
+        console.log("Current user:", user ? `User ID: ${user.id}` : "No user found");
+
+        // If you throw, the user will not be able to upload
+        if (!user) {
+          console.error("Unauthorized: No user found");
+          throw new UploadThingError("Unauthorized");
+        }
+
+        // Whatever is returned here is accessible in onUploadComplete as `metadata`
+        return { userId: user.id };
+      } catch (error) {
+        console.error("Error in UploadThing middleware:", error);
+        throw error;
+      }
+    })
+    .onUploadComplete(async ({ metadata, file }) => {
+      // This code RUNS ON YOUR SERVER after upload
+      try {
+        console.log("Upload complete for userId:", metadata.userId);
+        console.log("file url", file.url);
+        console.log("Complete file object:", JSON.stringify(file, null, 2));
+
+        // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
+        return { 
+          uploadedBy: metadata.userId,
+          fileUrl: file.ufsUrl,
+          fileName: file.name,
+          fileSize: file.size,
+          fileKey: file.key
+        };
+      } catch (error) {
+        console.error("Error in onUploadComplete:", error);
+        console.error("Error details:", error);
+        throw error;
+      }
+    }),
+} satisfies FileRouter;
+
+export type OurFileRouter = typeof ourFileRouter;

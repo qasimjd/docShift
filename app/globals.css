@@ -171,6 +171,16 @@ html {
   body {
     @apply bg-background text-foreground;
   }
+    :root {
+    --brand: 27 96% 61%;
+    --brand-foreground: 31 97% 72%;
+  }
+
+  .dark {
+    --brand: 31 97% 72%;
+    --brand-foreground: 27 96% 61%
+  }
+
 }
 
 @layer utilities {
@@ -224,17 +234,5 @@ html {
 
   .max-w-container {
     max-width: 1200px;
-  }
-}
-
-@layer base {
-  :root {
-    --brand: 27 96% 61%;
-    --brand-foreground: 31 97% 72%;
-  }
-
-  .dark {
-    --brand: 31 97% 72%;
-    --brand-foreground: 27 96% 61%
   }
 }
