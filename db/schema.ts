@@ -1,4 +1,4 @@
-import { boolean, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import { boolean, integer, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 
 export const usersTable = pgTable("users", {
     id: uuid("id").defaultRandom().primaryKey(),
@@ -19,9 +19,10 @@ export const pdfFilesTable = pgTable("pdf_files", {
     userId: uuid("user_id").notNull().references(() => usersTable.id, { onDelete: "cascade" }),
     title: varchar("title", { length: 255 }).notNull(),
     fileUrl: text("file_url").notNull(),
+    fileSize: integer("file_size").notNull(),
     fileData: text("file_data").notNull(),
     summary: text("summary"),
-    hasSummary: boolean("has_summary").default(false),
+    hasSummary: boolean("has_summary").default(false).notNull(),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow(),
 });

@@ -45,7 +45,7 @@ const FILE_SIZES = [
     "YB",
 ] as const;
 
-const formatBytes = (bytes: number, decimals = 2): string => {
+export const formatBytes = (bytes: number, decimals = 2): string => {
     if (!+bytes) return "0 Bytes";
     const k = 1024;
     const dm = decimals < 0 ? 0 : decimals;

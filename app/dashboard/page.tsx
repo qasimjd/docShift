@@ -2,8 +2,9 @@ import ContributorsOverviewTable from '@/components/ui/contributors-overview-tab
 import ActivityWrapper from '@/components/ActivityWrapper'
 import { CreditInfo } from '@/components/ui/activity-card'
 import FileUploadSection from '@/components/FileUploadSection'
+import { getFilesByUser } from '@/actions/file.action'
 
-const page = () => {
+const dashboardPage = async () => {
 
     const creditInfo: CreditInfo = {
         remaining: 4,
@@ -12,6 +13,7 @@ const page = () => {
         resetDate: "Jan 15, 2025"
     };
 
+    const userFiles = await getFilesByUser();
 
 
     return (
@@ -39,7 +41,7 @@ const page = () => {
 
                     {/* Right Column - Recent Activity */}
                     <div className="w-full col-span-3">
-                        <ContributorsOverviewTable />
+                        <ContributorsOverviewTable files={userFiles} />
                     </div>
                 </div>
             </main>
@@ -47,4 +49,4 @@ const page = () => {
     )
 }
 
-export default page
+export default dashboardPage
