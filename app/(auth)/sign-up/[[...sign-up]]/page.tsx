@@ -9,9 +9,6 @@ function page() {
                 <div className="flex flex-col gap-6">
                     <Card className="overflow-hidden p-0 border-none bg-background">
                         <CardContent className="grid p-0 lg:grid-cols-2">
-                            <div className="flex items-center justify-center p-8 lg:p-12">
-                                <SignUp />
-                            </div>
                             <div className="relative hidden lg:block overflow-hidden min-h-[600px]">
                                 <BackgroundCircles 
                                     variant="tertiary"
@@ -19,6 +16,9 @@ function page() {
                                     description="Sign up to start your journey"
                                     className="absolute inset-0 w-full h-full"
                                 />
+                            </div>
+                            <div className="flex items-center justify-center p-8 lg:p-12">
+                                <SignUp />
                             </div>
                         </CardContent>
                     </Card>

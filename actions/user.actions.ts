@@ -2,6 +2,7 @@
 
 import { db } from "@/db";
 import { usersTable } from "@/db/schema";
+import { useUser } from "@clerk/nextjs";
 import { eq, sql } from "drizzle-orm";
 
 interface User {
@@ -11,6 +12,8 @@ interface User {
     username?: string;
     photo?: string;
 }
+
+const { user } = useUser();
 
 export async function createUser(user: User) {
 
@@ -47,3 +50,13 @@ export async function deleteUser(clerkId: string) {
         .returning();
     return deletedUser;
 }
+
+export async function getUserByClerkId() {
+    const databaseUser = await db.query.usersTable.findFirst({
+        where: eq(usersTable.clerkId, user?.id || ""),
+    });
+    if (!databaseUser) {
+        throw new Error(`User not found with Clerk ID: ${user?.id}`);
+    }
+    return databaseUser;
+};

@@ -40,7 +40,7 @@ export const ourFileRouter = {
       // This code RUNS ON YOUR SERVER after upload
       try {
         console.log("Upload complete for userId:", metadata.userId);
-        console.log("file url", file.url);
+        console.log("file url", file.ufsUrl);
         console.log("Complete file object:", JSON.stringify(file, null, 2));
 
         // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback

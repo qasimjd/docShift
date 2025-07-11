@@ -9,12 +9,15 @@ import { generatePDFSummary } from "@/actions/upload.actin";
 const FileUploadSection = () => {
     const { startUpload } = useUploadThing("pdfUploader", {
         onClientUploadComplete: (res) => {
-            console.log("Upload completed successfully!", res);
+            toast.success("Upload completed successfully! " + res[0].name);
+            console.log("Upload completed successfully:", res);
         },
         onUploadError: (error) => {
+            toast.error("Upload error:" + (error.message || error));
             console.error("Upload error:", error);
         },
         onUploadBegin: (file) => {
+            toast.loading("Upload beginning for file: " + file);
             console.log("Upload beginning for file:", file);
         },
     });
@@ -26,6 +29,10 @@ const FileUploadSection = () => {
             if (res && res.length > 0) {
                 const uploadResult = res[0];
                 const pdfFile = uploadResult.serverData;
+                if (!pdfFile) {
+                    toast.error("Upload failed: No file data received");
+                    return;
+                }
                 const summaary = await generatePDFSummary(pdfFile);
                 if (summaary?.success === false) {
                     toast.error(summaary.message);

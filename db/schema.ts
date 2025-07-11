@@ -16,9 +16,10 @@ export const usersTable = pgTable("users", {
 
 export const pdfFilesTable = pgTable("pdf_files", {
     id: uuid("id").defaultRandom().primaryKey(),
-    userId: varchar("user_id", { length: 256 }).notNull().references(() => usersTable.id, { onDelete: "cascade" }),
+    userId: uuid("user_id").notNull().references(() => usersTable.id, { onDelete: "cascade" }),
     title: varchar("title", { length: 255 }).notNull(),
     fileUrl: text("file_url").notNull(),
+    fileData: text("file_data").notNull(),
     summary: text("summary"),
     hasSummary: boolean("has_summary").default(false),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),

@@ -10,14 +10,14 @@ function page() {
                     <Card className="overflow-hidden p-0 border-none bg-background">
                         <CardContent className="grid p-0 md:grid-cols-1 lg:grid-cols-2">
                             {/* Sign-in form section */}
-                            <div className="flex items-center justify-center mx-auto sm:p-6 md:p-8 lg:p-12 order-2 lg:order-1">
+                            <div className="flex items-center justify-center mx-auto sm:p-6 md:p-8 lg:p-12 order-2 lg:order-2">
                                 <div className="w-full max-w-sm">
                                     <SignIn />
                                 </div>
                             </div>
                             
                             {/* Background section - now visible on all screens but with responsive design */}
-                            <div className="relative overflow-hidden min-h-[200px] sm:min-h-[250px] md:min-h-[300px] lg:min-h-[600px] order-1 lg:order-2">
+                            <div className="relative overflow-hidden min-h-[200px] sm:min-h-[250px] md:min-h-[300px] lg:min-h-[600px] order-1 lg:order-1">
                                 <BackgroundCircles 
                                     variant="tertiary"
                                     title="Welcome Back"
