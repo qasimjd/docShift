@@ -9,11 +9,8 @@ const FilePreviewSection = ({documentName, documentUrl}: {documentName: string, 
     const router = useRouter();
 
     const handleViewDocument = () => {
-        if (documentUrl.startsWith('http')) {
-            window.open(documentUrl, '_blank', 'noopener,noreferrer');
-        } else {
-            router.push(`/document-viewer?url=${encodeURIComponent(documentUrl)}`);
-        }
+        // Always use our internal document viewer for all files
+        router.push(`/document-viewer?url=${encodeURIComponent(documentUrl)}&title=${encodeURIComponent(documentName)}`);
     };
 
 

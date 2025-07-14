@@ -8,7 +8,7 @@ import {
     useEffect,
 } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { UploadCloud, File as FileIcon } from "lucide-react";
+import { UploadCloud } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type FileStatus = "idle" | "dragging" | "uploading" | "error";

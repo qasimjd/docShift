@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-export const useNavigationHelpers = () => {
+const useNavigationHelpers = () => {
     const router = useRouter();
 
     const navigateToDashboard = () => {
@@ -17,15 +17,9 @@ export const useNavigationHelpers = () => {
         }
     };
 
-    const openSupportContact = () => {
-        // You can replace this with your actual support contact method
-        window.open("mailto:support@docshift.com?subject=AI Quota Issue", "_blank");
-    };
-
     return {
         navigateToDashboard,
         navigateToFile,
-        openSupportContact,
     };
 };
 

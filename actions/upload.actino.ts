@@ -5,7 +5,7 @@ import { pdfFilesTable, usersTable } from "@/db/schema";
 import { fetchAndExtractPdf } from "@/lib/langchain";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import { generateSummary } from "./file.action";
+import { generateSummaryWithGemini } from "./gemini.action";
 interface PDFFile {
     uploadedBy: string;
     fileUrl: string;
@@ -89,9 +89,9 @@ export const generatePDFSummary = async (pdfFile: PDFFile) => {
         const savedFile = await saveFileToDatabase(pdfFile, pdfText.data);
 
         try {
-            const summary = await generateSummary(pdfText.data);
+            const summary = await generateSummaryWithGemini(pdfText.data);
 
-            if (!summary) {
+            if (!summary || summary.length === 0) {
                 return {
                     success: false,
                     message: "Failed to generate summary but file was saved successfully. You can try regenerating the summary later.",
@@ -100,11 +100,11 @@ export const generatePDFSummary = async (pdfFile: PDFFile) => {
             }
 
             // Update the saved file with summary
-            if (savedFile) {
-                await db.update(pdfFilesTable).set({ 
-                    summary, 
+            if (savedFile && summary) {
+                await db.update(pdfFilesTable).set({
+                    summary,
                     hasSummary: true,
-                    updatedAt: new Date() 
+                    updatedAt: new Date()
                 }).where(eq(pdfFilesTable.id, savedFile.id));
             }
 
@@ -120,16 +120,16 @@ export const generatePDFSummary = async (pdfFile: PDFFile) => {
         } catch (summaryError: any) {
             // File is already saved, just return it without summary
             console.error("Summary generation failed, but file was saved:", summaryError);
-            
+
             const errorMessage = summaryError?.message;
             let userMessage = "File uploaded successfully, but summary generation failed.";
-            
+
             if (errorMessage === "QUOTA_EXCEEDED") {
                 userMessage = "File uploaded successfully, but AI quota exceeded. You can regenerate the summary later.";
             } else if (errorMessage === "SERVICE_UNAVAILABLE") {
                 userMessage = "File uploaded successfully, but AI service is temporarily unavailable. You can regenerate the summary later.";
             }
-            
+
             return {
                 success: true,
                 message: userMessage,
@@ -139,10 +139,10 @@ export const generatePDFSummary = async (pdfFile: PDFFile) => {
 
     } catch (error: any) {
         console.error("Error generating PDF summary:", error);
-        
+
         // Handle specific error types with user-friendly messages
         const errorMessage = error?.message;
-        
+
         if (errorMessage === "QUOTA_EXCEEDED") {
             return {
                 success: false,
@@ -150,7 +150,7 @@ export const generatePDFSummary = async (pdfFile: PDFFile) => {
                 data: null,
             };
         }
-        
+
         if (errorMessage === "API_KEY_INVALID") {
             return {
                 success: false,
@@ -158,7 +158,7 @@ export const generatePDFSummary = async (pdfFile: PDFFile) => {
                 data: null,
             };
         }
-        
+
         if (errorMessage === "SERVICE_UNAVAILABLE") {
             return {
                 success: false,
@@ -166,7 +166,7 @@ export const generatePDFSummary = async (pdfFile: PDFFile) => {
                 data: null,
             };
         }
-        
+
         if (errorMessage === "AI_PROCESSING_FAILED") {
             return {
                 success: false,
@@ -174,7 +174,7 @@ export const generatePDFSummary = async (pdfFile: PDFFile) => {
                 data: null,
             };
         }
-        
+
         return {
             success: false,
             message: "Failed to generate PDF summary. Please try again later.",

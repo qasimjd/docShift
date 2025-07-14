@@ -6,19 +6,25 @@ import Link from 'next/link';
 import DocumentInfo from '@/components/DocumentInfo';
 import FilePreviewSection from '@/components/FilePreviewSection';
 import SummarySection from '@/components/SummarySection';
-
-const document = {
-    id: "1",
-    name: "document-analysis.pdf",
-    uploaded: "2 hours ago",
-    size: "2.4 MB",
-    summary: "This document contains an in-depth analysis of the recent market trends and forecasts for the next quarter. It includes detailed charts and graphs to illustrate key points.",
-    documentUrl: "https://example.com/document-analysis.ppt",
-}
+import { getFilesById } from '@/actions/file.action';
+import { getFileSize, formatDate } from '@/lib/utils';
 
 
 const summaryPage = async ({ params }: { params: Promise<{ id?: string }> }) => {
     const { id } = await params;
+
+    if (!id) throw new Error("Document ID is required");
+    const documentData = await getFilesById(id);
+
+    // Transform the document data to match the expected interface
+    const document = {
+        title: documentData.title,
+        size: getFileSize(documentData.fileSize),
+        fileUrl: documentData.fileUrl,
+        uploaded: formatDate(documentData.createdAt),
+    };
+
+    console.log("Fetched document:", documentData)
 
     return (
         <div className="px-6 max-w-6xl mx-auto space-y-6">
@@ -39,11 +45,11 @@ const summaryPage = async ({ params }: { params: Promise<{ id?: string }> }) => 
                 <DocumentInfo document={document} />
 
                 {/* File Preview Section */}
-                <FilePreviewSection documentName={document.name} documentUrl={document.documentUrl} />
+                <FilePreviewSection documentName={document.title} documentUrl={document.fileUrl} />
             </div>
 
             {/* Summary Section */}
-            <SummarySection documentSummary={document.summary} />
+            {documentData.summary && <SummarySection documentSummary={documentData.summary} />}
 
             {/* Additional Details */}
             <Card>

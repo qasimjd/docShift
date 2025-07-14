@@ -2,14 +2,16 @@
 
 import { useUploadThing } from "@/lib/uploadthing";
 import React, { useState, useRef } from 'react'
-import FileUpload, { formatBytes } from "./FileUpload";
+import FileUpload from "./FileUpload";
 import { toast } from "sonner";
 import { generatePDFSummary } from "@/actions/upload.actino";
+import { useRouter } from "next/navigation";
 
 const FileUploadSection = () => {
-    const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({});
     const [uploadingFiles, setUploadingFiles] = useState<Set<string>>(new Set());
     const uploadToastRefs = useRef<Record<string, string | number>>({});
+
+    const router = useRouter();
 
     const { startUpload } = useUploadThing("pdfUploader", {
         onClientUploadComplete: (res) => {
@@ -17,20 +19,10 @@ const FileUploadSection = () => {
             if (uploadToastRefs.current[fileName]) {
                 toast.dismiss(uploadToastRefs.current[fileName]);
             }
-            toast.success(`${fileName} uploaded successfully!`, {
-                description: `File size: ${formatBytes(res[0].size)}`,
-                duration: 4000,
-            });
-
             setUploadingFiles(prev => {
                 const newSet = new Set(prev);
                 newSet.delete(fileName);
                 return newSet;
-            });
-            setUploadProgress(prev => {
-                const newProgress = { ...prev };
-                delete newProgress[fileName];
-                return newProgress;
             });
             delete uploadToastRefs.current[fileName];
 
@@ -49,7 +41,6 @@ const FileUploadSection = () => {
             });
 
             setUploadingFiles(new Set());
-            setUploadProgress({});
             uploadToastRefs.current = {};
 
             console.error("Upload error:", error);
@@ -59,7 +50,6 @@ const FileUploadSection = () => {
 
             setUploadingFiles(prev => new Set([...prev, fileName]));
 
-            setUploadProgress(prev => ({ ...prev, [fileName]: 0 }));
 
             const toastId = toast.loading(
                 `Uploading ${fileName}...`,
@@ -77,37 +67,10 @@ const FileUploadSection = () => {
                 uploadId: toastId,
             });
         },
-
-        onUploadProgress: (progress) => {
-            console.log("Upload progress:", progress);
-
-            setUploadProgress(prev => {
-                const newProgress = { ...prev };
-                uploadingFiles.forEach(fileName => {
-                    newProgress[fileName] = progress;
-
-                    if (uploadToastRefs.current[fileName]) {
-                        toast.loading(
-                            `Uploading ${fileName}... ${Math.round(progress)}%`,
-                            {
-                                id: uploadToastRefs.current[fileName],
-                                description: `Progress: ${Math.round(progress)}% complete`,
-                            }
-                        );
-                    }
-                });
-                return newProgress;
-            });
-        },
     });
 
     const onSuccess = async (file: File) => {
         try {
-            toast.info(`Starting upload for ${file.name}`, {
-                description: `File size: ${formatBytes(file.size)}`,
-                duration: 2000,
-            });
-
             const res = await startUpload([file]);
 
             if (res && res.length > 0) {
@@ -141,11 +104,9 @@ const FileUploadSection = () => {
                         return;
                     }
 
-                    // Show success for processing
-                    toast.success(`${file.name} processed successfully!`, {
-                        description: "Document summary has been generated",
-                        duration: 4000,
-                    });
+                    if (response.data?.summary) {
+                        router.push(`/dashboard/summary/${savedFile?.id}`);
+                    }
 
                     console.log("PDF Summary generated:", {
                         fileName: savedFile?.title,

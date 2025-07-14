@@ -9,9 +9,6 @@ import { Button } from "@/components/ui/button"
 import ThemeTogel from "../ThemeTogel"
 import Logo from "../logo"
 import {
-    ClerkProvider,
-    SignInButton,
-    SignUpButton,
     SignedIn,
     SignedOut,
     UserButton,

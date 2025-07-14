@@ -13,7 +13,7 @@ export async function POST(req: Request) {
   try {
     Buffer.from(SIGNING_SECRET, "base64").toString("utf-8");
   } catch (error) {
-    console.error("❌ Error: SIGNING_SECRET is not a valid Base64 string.");
+    console.error("❌ Error: SIGNING_SECRET is not a valid Base64 string.", error);
     return new Response("Server Error: Invalid SIGNING_SECRET", { status: 500 });
   }
 

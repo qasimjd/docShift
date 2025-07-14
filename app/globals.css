@@ -94,7 +94,7 @@ html {
   --secondary-foreground: oklch(0.222 0.019 64.72207234265656);
   --muted: oklch(0.926 0.011 65.82512101771023);
   --muted-foreground: rgb(107, 114, 128);
-  --accent: oklch(0.920 0.110 107.5337748815114);
+  --accent: rgb(255, 244, 233);
   --accent-foreground: oklch(0.262 0.041 108.02760260924693);
   --destructive: rgb(239, 68, 68);
   --destructive-foreground: rgb(255, 255, 255);
