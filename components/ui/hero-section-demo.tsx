@@ -21,7 +21,7 @@ export function HeroSectionDemo() {
       description="DocSift helps you turn long reports, research papers, and contracts into clear, concise summaries — powered by AI and ready to use instantly."
       actions={[
         {
-          text: "Get Started Free",
+          text: user ? "Go to Dashboard" : "Get Started Free",
           href: user ? "/dashboard" : "/sign-up",
           variant: "pcolor",
         },

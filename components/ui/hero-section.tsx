@@ -61,7 +61,7 @@ export function HeroSection({
         <section
             className={cn(
                 "bg-background text-foreground",
-                "py-12 sm:py-24 md:py-32 px-4",
+                "py-20 sm:py-24 md:py-32 px-4",
                 "fade-bottom overflow-hidden pb-0"
             )}
         >

@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import ThemeTogel from "../ThemeTogel"
 import Logo from "../logo"
+
 import {
     SignedIn,
     SignedOut,
@@ -98,7 +99,6 @@ export function NavBar({ items }: NavBarProps) {
                         <span>DocSift</span>
                     </Link>
                     <div className="flex items-center gap-2">
-                        <ThemeTogel />
 
                         <SignedOut>
                             <Button variant="glow" asChild className="rounded-full">
@@ -112,6 +112,7 @@ export function NavBar({ items }: NavBarProps) {
                             <UserButton />
                         </SignedIn>
 
+                        <ThemeTogel />
                     </div>
                 </div>
             </div>
@@ -165,7 +166,7 @@ export function NavBar({ items }: NavBarProps) {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:block fixed top-0 left-0 right-0 z-50 pt-6 px-6">
-                <div className="flex items-center justify-between max-w-5xl mx-auto w-full">
+                <div className="flex items-center justify-between max-w-6xl mx-auto w-full">
                     <Link href="/" className="flex items-center justify-center text-lg font-bold text-primary bg-background/5 border border-border backdrop-blur-lg from-brand to-brand-foregroun shadow-lg rounded-full px-3">
                         <Logo width={40} height={40} className="inline-block" />
                         <span>DocSift</span>
@@ -212,7 +213,6 @@ export function NavBar({ items }: NavBarProps) {
                         })}
                     </div>
                     <div className="flex items-center gap-2">
-                        <ThemeTogel />
                         <SignedOut>
                             <Button variant="glow" asChild className="rounded-full">
                                 <Link href="/sign-in">
@@ -221,10 +221,16 @@ export function NavBar({ items }: NavBarProps) {
                             </Button>
                         </SignedOut>
 
+                        <Button variant="glow" asChild className="rounded-full">
+                            <Link href="/dashboard">
+                                Dashboard
+                            </Link>
+                        </Button>
+
+                        <ThemeTogel />
                         <SignedIn>
                             <UserButton />
                         </SignedIn>
-
                     </div>
                 </div>
             </div>

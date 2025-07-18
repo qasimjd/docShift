@@ -1,29 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-html {
-  scroll-behavior: smooth;
-}
-/* Slim scrollbar styles */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) var(--background);
-}
-
-*::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-*::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 8px;
-}
-
-*::-webkit-scrollbar-track {
-  background: var(--background);
-  border-radius: 8px;
-}
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -161,6 +138,30 @@ html {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+/* Slim scrollbar styles */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) var(--background);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--background);
+  border-radius: 8px;
 }
 
 @layer base {
