@@ -9,15 +9,21 @@ import { AutoResizeTextarea } from "@/components/autoresize-textarea"
 import { useEffect, useRef } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useUser } from "@clerk/nextjs"
+import { Message } from "ai"
+import { saveChatMessage } from "@/actions/message.action"
 
 interface ChatFormProps extends React.ComponentProps<"form"> {
     fileData: string
+    userId: string
+    fileId: string
+    initialMessages: Message[]
 }
 
-export function ChatForm({ className, fileData, ...props }: ChatFormProps) {
+export function ChatForm({ className, fileData, userId, fileId, initialMessages, ...props }: ChatFormProps) {
     const { messages, input, setInput, append } = useChat({
         api: "/api/chat",
-        body: { fileData: fileData || "" },
+        body: { fileData: fileData || "", userId, fileId },
+        initialMessages: initialMessages || [],
     })
 
     const scrollRef = useRef<HTMLDivElement | null>(null)
@@ -29,9 +35,17 @@ export function ChatForm({ className, fileData, ...props }: ChatFormProps) {
         }
     }, [messages])
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        void append({ content: input, role: "user" })
+        const messageContent = input.trim()
+        if (!messageContent) return
+        void append({ content: messageContent, role: "user" })
+        saveChatMessage({
+            fileId,
+            userId,
+            role: "user",
+            content: messageContent,
+        })
         setInput("")
     }
 
@@ -52,8 +66,8 @@ export function ChatForm({ className, fileData, ...props }: ChatFormProps) {
             </p>
         </header>
     )
-    
-    const {user} = useUser();
+
+    const { user } = useUser();
     const messageList = (
         <div className="my-4 flex min-h-full flex-col gap-4">
             {messages.map((m, i) => {

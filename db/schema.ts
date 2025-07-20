@@ -1,4 +1,4 @@
-import { boolean, integer, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import { boolean, index, integer, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 
 export const usersTable = pgTable("users", {
     id: uuid("id").defaultRandom().primaryKey(),
@@ -26,3 +26,15 @@ export const pdfFilesTable = pgTable("pdf_files", {
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow(),
 });
+
+export const chatMessages = pgTable("chat_messages", {
+    id: uuid("id").defaultRandom().primaryKey(),
+    fileId: uuid("file_id").notNull().references(() => pdfFilesTable.id, { onDelete: "cascade" }),
+    userId: uuid("user_id").notNull().references(() => usersTable.id, { onDelete: "cascade" }),
+    role: text("role", { enum: ["user", "assistant"] }).notNull(),
+    content: text("content").notNull(),
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
+}, (table) => ({
+    fileIndex: index("file_id_idx").on(table.fileId),
+    userIndex: index("user_id_idx").on(table.userId),
+}));

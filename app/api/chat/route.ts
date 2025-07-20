@@ -1,10 +1,10 @@
 // app/api/chat/route.ts
 import { type CoreMessage, streamText } from "ai";
 import { google } from "@ai-sdk/google";
+import { saveChatMessage } from "@/actions/message.action";
 
 export async function POST(req: Request) {
-    const { messages, fileData }: { messages: CoreMessage[]; fileData: string } = await req.json();
-
+    const { messages, fileData, fileId, userId }: { messages: CoreMessage[]; fileData: string; fileId: string; userId: string } = await req.json();
     const systemPrompt = `
 You are an AI assistant for DocSift, a document summarization platform built with the help of Qasim. Your role is to help users quickly understand the key topics, main arguments, and conclusions of a document based on its summary.
 
@@ -39,9 +39,14 @@ ${fileData}
         model: google("gemini-1.5-flash"),
         system: systemPrompt.trim(),
         messages,
-        onFinish: (message) => {
-            console.log("AI response:", message);
-        }
+        async onFinish(message) {
+            await saveChatMessage({
+                fileId,
+                userId,
+                role: "assistant",
+                content: message.text,
+            });
+        },
     });
 
     return result.toDataStreamResponse();

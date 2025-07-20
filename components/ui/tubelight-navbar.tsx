@@ -74,10 +74,10 @@ export function NavBar({ items }: NavBarProps) {
     const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, url: string, name: string) => {
         if (url.startsWith('#')) {
             e.preventDefault()
-            
+
             // Set active tab immediately for smooth visual transition
             setActiveTab(name)
-            
+
             // Prevent scroll listener from interfering
             setIsUserScrolling(true)
 
@@ -100,7 +100,7 @@ export function NavBar({ items }: NavBarProps) {
                     top: targetPosition,
                     behavior: 'smooth'
                 })
-                
+
                 // Re-enable scroll listener after animation
                 setTimeout(() => setIsUserScrolling(false), 1000)
             }
@@ -244,11 +244,13 @@ export function NavBar({ items }: NavBarProps) {
                             </Button>
                         </SignedOut>
 
-                        <Button variant="glow" asChild className="rounded-full">
-                            <Link href="/dashboard">
-                                Dashboard
-                            </Link>
-                        </Button>
+                        <SignedIn>
+                            <Button variant="glow" asChild className="rounded-full">
+                                <Link href="/dashboard">
+                                    Dashboard
+                                </Link>
+                            </Button>
+                        </SignedIn>
 
                         <ThemeToggle />
                         <SignedIn>

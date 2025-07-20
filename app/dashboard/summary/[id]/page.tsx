@@ -8,6 +8,8 @@ import SummarySection from '@/components/SummarySection';
 import { getFilesById } from '@/actions/file.action';
 import { getFileSize, formatDate } from '@/lib/utils';
 import ChatOnSummarySection from '@/components/ChatOnSummarySection';
+import { getChatMessages } from '@/actions/message.action';
+import { Message } from 'ai';
 
 
 const summaryPage = async ({ params }: { params: Promise<{ id?: string }> }) => {
@@ -24,7 +26,13 @@ const summaryPage = async ({ params }: { params: Promise<{ id?: string }> }) => 
         fileData: documentData.fileData
     };
 
-    console.log("Fetched document:", documentData)
+    const dbMessages = await getChatMessages(documentData.id);
+    const initialMessages: Message[] = dbMessages.map((m) => ({
+        id: m.id,                            
+        role: m.role as "user" | "assistant",
+        content: m.content,
+    }));
+
 
     return (
         <div className="px-6 max-w-6xl mx-auto space-y-6 pb-12">
@@ -52,7 +60,12 @@ const summaryPage = async ({ params }: { params: Promise<{ id?: string }> }) => 
             {documentData.summary && <SummarySection documentSummary={documentData.summary} />}
 
             {/* Additional Details */}
-            <ChatOnSummarySection fileData={document.fileData} />
+            <ChatOnSummarySection
+                fileData={document.fileData}
+                userId={documentData.userId}
+                fileId={documentData.id}
+                initialMessages={initialMessages}
+            />
         </div>
     )
 }
