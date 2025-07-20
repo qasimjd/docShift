@@ -2,7 +2,7 @@
 
 import Logo from './logo'
 import { Button } from './ui/button'
-import ThemeTogel from './ThemeTogel'
+import ThemeTogel from './ThemeToggle'
 import Link from 'next/link'
 import { SignedIn, UserButton } from '@clerk/nextjs'
 

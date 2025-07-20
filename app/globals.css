@@ -75,7 +75,7 @@
   --accent-foreground: oklch(0.262 0.041 108.02760260924693);
   --destructive: rgb(239, 68, 68);
   --destructive-foreground: rgb(255, 255, 255);
-   --border: oklch(0.851 0.022 65.6434302503998);
+  --border: oklch(0.851 0.022 65.6434302503998);
   --input: oklch(0.851 0.022 65.6434302503998);
   --ring: oklch(0.725 0.189 51.04018447516219);
   --chart-1: rgb(134, 167, 200);
@@ -140,30 +140,6 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-html {
-  scroll-behavior: smooth;
-}
-/* Slim scrollbar styles */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) var(--background);
-}
-
-*::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-*::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 8px;
-}
-
-*::-webkit-scrollbar-track {
-  background: var(--background);
-  border-radius: 8px;
-}
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -172,7 +148,8 @@ html {
   body {
     @apply bg-background text-foreground;
   }
-    :root {
+
+  :root {
     --brand: 27 96% 61%;
     --brand-foreground: 31 97% 72%;
   }
@@ -236,4 +213,30 @@ html {
   .max-w-container {
     max-width: 1200px;
   }
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Slim scrollbar styles */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) var(--background);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--background);
+  border-radius: 8px;
 }

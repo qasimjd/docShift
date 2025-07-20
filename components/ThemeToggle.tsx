@@ -5,7 +5,7 @@ import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import { Button } from './ui/button'
 
-const ThemeTogel = () => {
+const ThemeToggle = () => {
     const { setTheme, theme } = useTheme()
 
     const toggleTheme = () => {
@@ -26,4 +26,4 @@ const ThemeTogel = () => {
     )
 }
 
-export default ThemeTogel
+export default ThemeToggle

@@ -6,7 +6,6 @@ import Link from "next/link"
 import { LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import ThemeTogel from "../ThemeTogel"
 import Logo from "../logo"
 
 import {
@@ -14,6 +13,7 @@ import {
     SignedOut,
     UserButton,
 } from '@clerk/nextjs'
+import ThemeToggle from "../ThemeToggle"
 
 interface NavItem {
     name: string
@@ -28,9 +28,14 @@ interface NavBarProps {
 
 export function NavBar({ items }: NavBarProps) {
     const [activeTab, setActiveTab] = useState(items[0].name)
+    const [isUserScrolling, setIsUserScrolling] = useState(false)
 
     useEffect(() => {
+        const scrollTimeout: NodeJS.Timeout | undefined = undefined
+
         const handleScroll = () => {
+            if (isUserScrolling) return
+
             const scrollPosition = window.scrollY + 100 // Offset for navbar height
 
             if (scrollPosition < 200) {
@@ -58,21 +63,31 @@ export function NavBar({ items }: NavBarProps) {
         }
 
         window.addEventListener('scroll', handleScroll)
-
         handleScroll()
 
-        return () => window.removeEventListener('scroll', handleScroll)
-    }, [items])
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+            if (scrollTimeout) clearTimeout(scrollTimeout)
+        }
+    }, [items, isUserScrolling])
 
-    const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, url: string) => {
+    const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, url: string, name: string) => {
         if (url.startsWith('#')) {
             e.preventDefault()
+            
+            // Set active tab immediately for smooth visual transition
+            setActiveTab(name)
+            
+            // Prevent scroll listener from interfering
+            setIsUserScrolling(true)
 
             if (url === '#') {
                 window.scrollTo({
                     top: 0,
                     behavior: 'smooth'
                 })
+                // Re-enable scroll listener after animation
+                setTimeout(() => setIsUserScrolling(false), 1000)
                 return
             }
 
@@ -85,7 +100,13 @@ export function NavBar({ items }: NavBarProps) {
                     top: targetPosition,
                     behavior: 'smooth'
                 })
+                
+                // Re-enable scroll listener after animation
+                setTimeout(() => setIsUserScrolling(false), 1000)
             }
+        } else {
+            // For regular page navigation, add smooth transition
+            setActiveTab(name)
         }
     }
 
@@ -94,7 +115,7 @@ export function NavBar({ items }: NavBarProps) {
             {/* Mobile Top Bar - Branding and Sign In */}
             <div className="fixed top-0 left-0 right-0 z-50 lg:hidden bg-background/80 backdrop-blur-lg border-b border-border">
                 <div className="flex items-center justify-between px-6 py-3">
-                    <Link href="/" className="font-bold text-primary bg-background/5 border border-border backdrop-blur-lg from-brand to-brand-foregroun shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 rounded-lg flex items-center py-1 px-2 gap-1">
+                    <Link href="/" className="font-bold text-primary bg-background/5 border border-border backdrop-blur-lg from-brand to-brand-foreground shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 rounded-lg flex items-center py-1 px-2 gap-1">
                         <Logo width={22} height={22} className="inline-block" />
                         <span>DocSift</span>
                     </Link>
@@ -112,7 +133,7 @@ export function NavBar({ items }: NavBarProps) {
                             <UserButton />
                         </SignedIn>
 
-                        <ThemeTogel />
+                        <ThemeToggle />
                     </div>
                 </div>
             </div>
@@ -130,7 +151,7 @@ export function NavBar({ items }: NavBarProps) {
                                     key={item.name}
                                     href={item.url}
                                     onClick={(e) => {
-                                        handleSmoothScroll(e, item.url)
+                                        handleSmoothScroll(e, item.url, item.name)
                                     }}
                                     className={cn(
                                         "relative cursor-pointer text-sm font-semibold px-4 py-2 rounded-full transition-colors",
@@ -146,8 +167,9 @@ export function NavBar({ items }: NavBarProps) {
                                             initial={false}
                                             transition={{
                                                 type: "spring",
-                                                stiffness: 300,
-                                                damping: 30,
+                                                stiffness: 400,
+                                                damping: 25,
+                                                duration: 0.3,
                                             }}
                                         >
                                             <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-1 bg-primary rounded-t-full">
@@ -167,7 +189,7 @@ export function NavBar({ items }: NavBarProps) {
             {/* Desktop Navigation */}
             <div className="hidden lg:block fixed top-0 left-0 right-0 z-50 pt-6 px-6">
                 <div className="flex items-center justify-between max-w-6xl mx-auto w-full">
-                    <Link href="/" className="flex items-center justify-center text-lg font-bold text-primary bg-background/5 border border-border backdrop-blur-lg from-brand to-brand-foregroun shadow-lg rounded-full px-3">
+                    <Link href="/" className="flex items-center justify-center text-lg font-bold text-primary bg-background/5 border border-border backdrop-blur-lg from-brand to-brand-foreground shadow-lg rounded-full px-3">
                         <Logo width={40} height={40} className="inline-block" />
                         <span>DocSift</span>
                     </Link>
@@ -181,7 +203,7 @@ export function NavBar({ items }: NavBarProps) {
                                     key={item.name}
                                     href={item.url}
                                     onClick={(e) => {
-                                        handleSmoothScroll(e, item.url)
+                                        handleSmoothScroll(e, item.url, item.name)
                                     }}
                                     className={cn(
                                         "relative cursor-pointer text-sm font-semibold px-6 py-2 rounded-full transition-colors",
@@ -197,8 +219,9 @@ export function NavBar({ items }: NavBarProps) {
                                             initial={false}
                                             transition={{
                                                 type: "spring",
-                                                stiffness: 300,
-                                                damping: 30,
+                                                stiffness: 400,
+                                                damping: 25,
+                                                duration: 0.3,
                                             }}
                                         >
                                             <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-1 bg-primary rounded-t-full">
@@ -227,7 +250,7 @@ export function NavBar({ items }: NavBarProps) {
                             </Link>
                         </Button>
 
-                        <ThemeTogel />
+                        <ThemeToggle />
                         <SignedIn>
                             <UserButton />
                         </SignedIn>
