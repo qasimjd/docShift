@@ -30,7 +30,7 @@ export function ActivityCard({
         <div
             className={cn(
                 "relative h-full rounded-3xl p-6",
-                "bg-background dark:bg-zinc-900",
+                "gradient-card",
                 "border border-border",
                 "hover:border-zinc-300 dark:hover:border-zinc-700",
                 "transition-all duration-300",

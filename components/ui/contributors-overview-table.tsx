@@ -34,7 +34,7 @@ function ContributorsOverviewTable({ files }: { files: File[] }) {
 
   return (
     <div
-      className="max-w-4xl mx-auto rounded-xl border border-border bg-background shadow-sm flex flex-col"
+      className="max-w-4xl mx-auto rounded-xl gradient-card shadow-sm flex flex-col"
       style={{ maxHeight: "calc(100vh - 13rem)", minHeight: "calc(100vh - 13rem)" }}
     >
       <div className="p-6 pb-4">

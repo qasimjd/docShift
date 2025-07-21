@@ -90,14 +90,14 @@ const SummarySection = ({ documentSummary }: SummarySectionProps) => {
     };
 
     return (
-        <Card className="shadow-lg border-0 bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
+        <Card className="bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 dark:from-orange-900/50 dark:via-amber-950/30 dark:to-yellow-950/30 rounded-2xl sm:p-8 border border-orange-200 dark:border-orange-700 shadow-inner relative">
             <CardHeader className="pb-6">
                 <CardTitle className="flex items-center justify-between text-xl">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1">
                         <FileText className="h-6 w-6 text-pcolor" />
-                        <span className="text-gray-900 dark:text-gray-100">Document Summary</span>
+                        <span className="text-gray-900 dark:text-gray-100 max-sm:text-sm">Document Summary</span>
                     </div>
-                    <Badge variant="secondary" className="bg-orange-50 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300">
+                    <Badge variant="secondary" className="bg-orange-50 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300 max-sm:text-xs">
                         <BookOpen className="h-3 w-3 mr-1" />
                         AI Generated
                     </Badge>
@@ -106,7 +106,7 @@ const SummarySection = ({ documentSummary }: SummarySectionProps) => {
 
             <CardContent className="space-y-6">
                 {/* Single Unified Section with Step-by-Step Content */}
-                <div className="bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 dark:from-orange-900/50 dark:via-amber-950/30 dark:to-yellow-950/30 rounded-2xl p-8 border border-orange-200 dark:border-orange-700 shadow-inner relative">
+                <div className="relative">
                     <div className="space-y-8 relative z-10">
 
                         {/* Check if we have structured content */}
@@ -219,20 +219,6 @@ const SummarySection = ({ documentSummary }: SummarySectionProps) => {
                                 </div>
                             </div>
                         )}
-                    </div>
-                </div>
-
-                {/* Enhanced Footer */}
-                <div className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 rounded-xl p-4 border border-gray-200 dark:border-gray-600">
-                    <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-400">
-                        <div className="flex items-center gap-2">
-                            <BookOpen className="h-3 w-3" />
-                            <span>Enhanced with AI-powered markdown formatting</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                            <div className="w-2 h-2 bg-green-600 rounded-full animate-pulse"></div>
-                            <span>Live parsing</span>
-                        </div>
                     </div>
                 </div>
             </CardContent>

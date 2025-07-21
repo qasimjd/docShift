@@ -518,7 +518,7 @@ export default function FileUpload({
                 <div className="relative w-full rounded-[10px]">
                     <div
                         className={cn(
-                            "relative mx-auto w-full overflow-hidden rounded-lg border border-primary bg-muted transition-all duration-300 shadow-sm backdrop-blur-2xl",
+                            "relative mx-auto w-full overflow-hidden rounded-lg gradient-card transition-all duration-300 shadow-sm backdrop-blur-2xl",
                             error ? "border-red-500/50" : ""
                         )}
                     >

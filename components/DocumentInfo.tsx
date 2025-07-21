@@ -12,7 +12,7 @@ interface Document {
 
 const DocumentInfo = ({ document }: { document: Document }) => {
     return (
-        <Card>
+        <Card className='gradient-card'>
             <CardHeader>
                     <CardTitle>
                         Document Information

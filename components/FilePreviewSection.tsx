@@ -15,7 +15,7 @@ const FilePreviewSection = ({documentName, documentUrl}: {documentName: string, 
 
 
     return (
-        <Card>
+        <Card className='gradient-card'>
             <CardHeader>
                 <CardTitle>File Preview</CardTitle>
             </CardHeader>

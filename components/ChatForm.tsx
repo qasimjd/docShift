@@ -57,7 +57,7 @@ export function ChatForm({ className, fileData, userId, fileId, initialMessages,
     }
 
     const header = (
-        <header className="m-auto flex max-w-96 flex-col gap-5 text-center">
+        <header className="m-auto flex max-w-96 flex-col gap-5 text-center mt-10">
             <h1 className="text-2xl font-semibold">Chat with AI</h1>
             <p className="text-muted-foreground text-sm">
                 Discuss your document with our AI assistant. Ask questions, get summaries, and more.
@@ -69,7 +69,7 @@ export function ChatForm({ className, fileData, userId, fileId, initialMessages,
 
     const { user } = useUser();
     const messageList = (
-        <div className="my-4 flex min-h-full flex-col gap-4">
+        <div className="my-4 py-6 flex min-h-full flex-col gap-4">
             {messages.map((m, i) => {
                 const isUser = m.role === "user";
                 const userImage = user?.imageUrl || ""
@@ -117,7 +117,7 @@ export function ChatForm({ className, fileData, userId, fileId, initialMessages,
     return (
         <main
             className={cn(
-                "mx-auto flex h-[70vh] w-full max-w-[55rem] flex-col",
+                "mx-auto flex h-[70vh] w-full max-w-6xl flex-col gradient-card",
                 className,
             )}
             {...props}
@@ -129,7 +129,7 @@ export function ChatForm({ className, fileData, userId, fileId, initialMessages,
 
             <form
                 onSubmit={handleSubmit}
-                className="relative mx-6 mb-6 flex items-center rounded-[16px] border px-3 py-1.5 pr-8
+                className="relative mx-6 mb-6 flex items-center rounded-[16px] border border-pcolor px-3 py-1.5 pr-8
                    focus-within:ring-2 focus-within:ring-ring/10"
             >
                 <AutoResizeTextarea
@@ -143,7 +143,7 @@ export function ChatForm({ className, fileData, userId, fileId, initialMessages,
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <Button variant="ghost" size="sm" className="absolute bottom-1 right-1 size-6 rounded-full">
-                            <ArrowUpIcon size={16} />
+                            <ArrowUpIcon size={16} className="text-pcolor" />
                         </Button>
                     </TooltipTrigger>
                     <TooltipContent sideOffset={12}>Submit</TooltipContent>
