@@ -19,7 +19,7 @@ export async function POST(req: Request) {
       process.env.STRIPE_WEBHOOK_SECRET!
     );
   } catch (err) {
-    return NextResponse.json({}, { status: 400 });
+    return NextResponse.json({err}, { status: 400 });
   }
 
   const allowedEvents: Stripe.Event.Type[] = [
