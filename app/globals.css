@@ -213,6 +213,11 @@
   .max-w-container {
     max-width: 1200px;
   }
+
+  .chat-gradeant {
+    background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
+    color: black;
+  }
 }
 
 

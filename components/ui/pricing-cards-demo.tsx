@@ -6,6 +6,7 @@ const pricingPlans = [
     name: "Free Plan",
     price: "$0",
     period: "/ month",
+    buttonLink: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_MONTHLY,
     features: [
       {
         title: "5 document summaries per month"
@@ -14,7 +15,7 @@ const pricingPlans = [
         title: "Basic AI-generated summaries"
       },
       {
-        title: "Upload PDF, DOCX, or TXT files"
+        title: "Upload PDF files"
       },
       {
         title: "No Q&A or advanced insights"
@@ -30,17 +31,15 @@ const pricingPlans = [
   },
   {
     name: "Pro Plan (Monthly)",
-    price: "$12",
+    price: "$8",
     period: "/ month",
+    paymentLink: process.env.NEXT_PUBLIC_PRO_PLAN_MONTHLY_LINK,
     features: [
       {
         title: "Unlimited document summaries"
       },
       {
         title: "AI-powered Q&A over your documents"
-      },
-      {
-        title: "Full semantic search with Ingest"
       },
       {
         title: "Summary history & version tracking"
@@ -62,8 +61,9 @@ const pricingPlans = [
   },
   {
     name: "Pro Plan (Yearly)",
-    price: "$120",
+    price: "$90",
     period: "/ year",
+    paymentLink: process.env.NEXT_PUBLIC_PRO_PLAN_YEARLY_LINK,
     features: [
       {
         title: "Everything in the Pro Monthly plan"
@@ -72,7 +72,7 @@ const pricingPlans = [
         title: "Billed annually at a discounted rate"
       },
       {
-        title: "You save $24 compared to monthly billing"
+        title: "You save $6 compared to monthly billing"
       }
     ],
     buttonText: "Save with Annual",

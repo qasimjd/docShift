@@ -1,4 +1,4 @@
-import { Check} from "lucide-react";
+import { Check } from "lucide-react";
 import {
     Card,
     CardContent,
@@ -6,12 +6,15 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 interface PricingPlan {
     name: string;
     price: string;
     period: string;
     description?: string;
+    paymentLink?: string;
     features: {
         title: string;
         description?: string;
@@ -73,14 +76,33 @@ function Pricing({
                                     <div className="flex flex-col gap-4 justify-start flex-1">
                                         {plan.features.map((feature, featureIndex) => (
                                             <div key={featureIndex} className="flex flex-row gap-4">
-                                                <Check className="w-4 h-4 mt-2 text-primary" />
+                                                <Check className="w-5 h-5 mt-2 text-primary" />
                                                 <p>{feature.title}</p>
                                             </div>
                                         ))}
                                     </div>
-                                    <Button variant={plan.buttonVariant || "outline"} className="gap-4 mt-auto">
-                                        {plan.buttonText} {plan.buttonIcon}
-                                    </Button>
+                                    <SignedOut>
+                                        <Button variant={plan.buttonVariant || "outline"} className="gap-4 mt-auto" asChild>
+                                            <Link href="/sign-up">
+                                                {plan.buttonText} {plan.buttonIcon}
+                                            </Link>
+                                        </Button>
+                                    </SignedOut>
+                                    <SignedIn>
+                                        {plan.paymentLink ? (
+                                            <Button variant={plan.buttonVariant || "outline"} className="gap-4 mt-auto" asChild>
+                                                <Link href={plan.paymentLink || "#"} target="_blank" rel="noopener noreferrer">
+                                                    {plan.buttonText} {plan.buttonIcon}
+                                                </Link>
+                                            </Button>
+                                        ) : (
+                                            <Button variant={plan.buttonVariant || "outline"} className="gap-4 mt-auto" asChild>
+                                                <Link href="/dashboard">
+                                                    {plan.buttonText} {plan.buttonIcon}
+                                                </Link>
+                                            </Button>
+                                        )}
+                                    </SignedIn>
                                 </div>
                             </CardContent>
                         </Card>

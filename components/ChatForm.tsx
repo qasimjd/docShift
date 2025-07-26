@@ -95,7 +95,7 @@ export function ChatForm({ className, fileData, userId, fileId, initialMessages,
                                 "max-w-[80%] rounded-xl px-3 py-2 text-sm",
                                 isUser
                                     ? "self-end bg-pcolor text-white"
-                                    : "self-start bg-gray-100 text-black"
+                                    : "self-start chat-gradeant"
                             )}
                         >
                             {m.content}
