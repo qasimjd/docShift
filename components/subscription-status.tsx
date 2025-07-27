@@ -165,12 +165,12 @@ export function SubscriptionStatus() {
         <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
           {isPro ? (
             <>
-              You're currently on the <strong>Pro plan</strong> with access to all premium features, 
+              You&apos;re currently on the <strong>Pro plan</strong> with access to all premium features, 
               priority support, and unlimited usage.
             </>
           ) : (
             <>
-              You're on the <strong>Free plan</strong> with basic features. Upgrade to Pro to unlock 
+              You&apos;re on the <strong>Free plan</strong> with basic features. Upgrade to Pro to unlock
               advanced capabilities, priority support, and remove limitations.
             </>
           )}
