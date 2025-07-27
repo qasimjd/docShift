@@ -92,9 +92,9 @@ export function ChatForm({ className, fileData, userId, fileId, initialMessages,
                         <div
                             data-role={m.role}
                             className={cn(
-                                "max-w-[80%] rounded-xl px-3 py-2 text-sm",
+                                "max-w-[65%] rounded-xl px-3 py-2 text-sm",
                                 isUser
-                                    ? "self-end bg-pcolor text-white"
+                                    ? "self-end bg-black text-white"
                                     : "self-start chat-gradeant"
                             )}
                         >
@@ -129,7 +129,7 @@ export function ChatForm({ className, fileData, userId, fileId, initialMessages,
 
             <form
                 onSubmit={handleSubmit}
-                className="relative mx-6 mb-6 flex items-center rounded-[16px] border border-pcolor px-3 py-1.5 pr-8
+                className="relative mx-6 mb-6 flex items-center rounded-[16px] border-2 border-black dark:border-pcolor px-3 py-1.5 pr-8
                    focus-within:ring-2 focus-within:ring-ring/10"
             >
                 <AutoResizeTextarea
@@ -143,7 +143,7 @@ export function ChatForm({ className, fileData, userId, fileId, initialMessages,
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <Button variant="ghost" size="sm" className="absolute bottom-1 right-1 size-6 rounded-full">
-                            <ArrowUpIcon size={16} className="text-pcolor" />
+                            <ArrowUpIcon size={16} className="text-black dark:text-pcolor" />
                         </Button>
                     </TooltipTrigger>
                     <TooltipContent sideOffset={12}>Submit</TooltipContent>

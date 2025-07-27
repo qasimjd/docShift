@@ -90,14 +90,14 @@ const SummarySection = ({ documentSummary }: SummarySectionProps) => {
     };
 
     return (
-        <Card className="bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 dark:from-orange-900/50 dark:via-amber-950/30 dark:to-yellow-950/30 rounded-2xl sm:p-8 border border-orange-200 dark:border-orange-700 shadow-inner relative">
+        <Card className="gradient-card relative">
             <CardHeader className="pb-6">
                 <CardTitle className="flex items-center justify-between text-xl">
                     <div className="flex items-center gap-1">
-                        <FileText className="h-6 w-6 text-pcolor" />
+                        <FileText className="h-6 w-6" />
                         <span className="text-gray-900 dark:text-gray-100 max-sm:text-sm">Document Summary</span>
                     </div>
-                    <Badge variant="secondary" className="bg-orange-50 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300 max-sm:text-xs">
+                    <Badge variant="secondary" className="bg-black hover:bg-black/80 text-white py-1 dark:bg-orange-900/30 dark:text-orange-300 max-sm:text-xs">
                         <BookOpen className="h-3 w-3 mr-1" />
                         AI Generated
                     </Badge>
@@ -118,12 +118,12 @@ const SummarySection = ({ documentSummary }: SummarySectionProps) => {
                                         <div className="flex items-start gap-4">
                                             <div className="flex-1">
                                                 <div className="flex items-center gap-2 mb-3">
-                                                    <Target className="h-5 w-5 text-orange-600" />
-                                                    <h3 className="font-semibold text-orange-900 dark:text-orange-100 text-base">Document Overview</h3>
+                                                    <Target className="h-5 w-5 text-orange-800" />
+                                                    <h3 className="font-semibold text-orange-800 dark:text-orange-100 text-base">Document Overview</h3>
                                                 </div>
                                                 <div className="space-y-2">
                                                     {sections['document overview'].paragraphs.map((paragraph: string, index: number) => (
-                                                        <p key={index} className="text-sm leading-relaxed text-slate-700 dark:text-slate-300 pl-4 border-l-2 border-orange-200 dark:border-orange-800"
+                                                        <p key={index} className="text-sm leading-relaxed text-slate-700 dark:text-slate-300 pl-4 border-l-2 border-black dark:border-orange-800"
                                                             dangerouslySetInnerHTML={{ __html: processBoldText(paragraph) }} />
                                                     ))}
                                                 </div>
@@ -138,7 +138,7 @@ const SummarySection = ({ documentSummary }: SummarySectionProps) => {
                                         <div className="flex items-start gap-4">
                                             <div className="flex-1">
                                                 <div className="flex items-center gap-2 mb-3">
-                                                    <Star className="h-5 w-5 text-orange-500" />
+                                                    <Star className="h-5 w-5 text-orange-800" />
                                                     <h3 className="font-semibold text-orange-800 dark:text-orange-200 text-base">Key Highlights</h3>
                                                 </div>
                                                 <ul className="space-y-3">
@@ -161,8 +161,8 @@ const SummarySection = ({ documentSummary }: SummarySectionProps) => {
                                         <div className="flex items-start gap-4">
                                             <div className="flex-1">
                                                 <div className="flex items-center gap-2 mb-3">
-                                                    <Lightbulb className="h-5 w-5 text-orange-400" />
-                                                    <h3 className="font-semibold text-orange-700 dark:text-orange-300 text-base">Important Details</h3>
+                                                    <Lightbulb className="h-5 w-5 text-orange-800" />
+                                                    <h3 className="font-semibold text-orange-800 dark:text-orange-300 text-base">Important Details</h3>
                                                 </div>
                                                 <ul className="space-y-3">
                                                     {sections['important details'].bullets.map((bullet: string, index: number) => (
@@ -184,12 +184,12 @@ const SummarySection = ({ documentSummary }: SummarySectionProps) => {
                                         <div className="flex items-start gap-4">
                                             <div className="flex-1">
                                                 <div className="flex items-center gap-2 mb-3">
-                                                    <TrendingUp className="h-5 w-5 text-orange-300" />
-                                                    <h3 className="font-semibold text-orange-600 dark:text-orange-400 text-base">Impact & Relevance</h3>
+                                                    <TrendingUp className="h-5 w-5 text-orange-800" />
+                                                    <h3 className="font-semibold text-orange-800 dark:text-orange-400 text-base">Impact & Relevance</h3>
                                                 </div>
                                                 <div className="space-y-2">
                                                     {sections['impact & relevance'].paragraphs.map((paragraph: string, index: number) => (
-                                                        <p key={index} className="text-sm leading-relaxed text-slate-700 dark:text-slate-300 pl-4 border-l-2 border-orange-200 dark:border-orange-800"
+                                                        <p key={index} className="text-sm leading-relaxed text-slate-700 dark:text-slate-300 pl-4 border-l-2 border-black dark:border-orange-800"
                                                             dangerouslySetInnerHTML={{ __html: processBoldText(paragraph) }} />
                                                     ))}
                                                 </div>
@@ -203,14 +203,14 @@ const SummarySection = ({ documentSummary }: SummarySectionProps) => {
                             <div className="relative">
                                 <div className="flex items-start gap-4">
                                     <div className="flex-shrink-0">
-                                        <div className="w-8 h-8 bg-orange-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                                        <div className="w-8 h-8 bg-orange-800 text-white rounded-full flex items-center justify-center text-sm font-bold">
                                             1
                                         </div>
                                     </div>
                                     <div className="flex-1">
                                         <div className="flex items-center gap-2 mb-3">
-                                            <FileText className="h-5 w-5 text-orange-600" />
-                                            <h3 className="font-semibold text-orange-900 dark:text-orange-100 text-base">Document Summary</h3>
+                                            <FileText className="h-5 w-5 text-orange-800" />
+                                            <h3 className="font-semibold text-orange-800 dark:text-orange-100 text-base">Document Summary</h3>
                                         </div>
                                         <div className="prose prose-gray dark:prose-invert max-w-none pl-4">
                                             {renderFallbackContent()}

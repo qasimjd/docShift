@@ -248,5 +248,5 @@ html {
 
 /* Gradient card utility */
 .gradient-card {
-  @apply bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 dark:from-orange-900/50 dark:via-amber-950/30 dark:to-yellow-950/30 rounded-2xl border border-orange-200 dark:border-orange-700 shadow-inner;
+  @apply border-2 border-black bg-muted dark:bg-gradient-to-br dark:from-orange-900/50 dark:via-amber-950/30 dark:to-yellow-950/30 rounded-2xl dark:border dark:border-orange-700 shadow-inner transition-colors;
 }

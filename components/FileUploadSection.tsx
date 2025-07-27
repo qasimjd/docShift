@@ -138,7 +138,7 @@ const FileUploadSection = () => {
     return (
         <>
             <FileUpload
-                acceptedFileTypes={["doc", "docx", "xls", "xlsx", "pdf", "txt"]}
+                acceptedFileTypes={["/pdf"]}
                 maxFileSize={20 * 1024 * 1024}
                 onUploadSuccess={onSuccess}
                 onUploadError={(error) => {

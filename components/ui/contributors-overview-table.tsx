@@ -35,7 +35,7 @@ function ContributorsOverviewTable({ files }: { files: File[] }) {
   return (
     <div
       className="max-w-4xl mx-auto rounded-xl gradient-card shadow-sm flex flex-col"
-      style={{ maxHeight: "calc(100vh - 13rem)", minHeight: "calc(100vh - 13rem)" }}
+      style={{ maxHeight: "calc(100vh - 12rem)", minHeight: "calc(100vh - 12rem)" }}
     >
       <div className="p-6 pb-4">
         <h2 className="text-xl font-semibold text-foreground">Recent File Uploads</h2>
@@ -43,20 +43,20 @@ function ContributorsOverviewTable({ files }: { files: File[] }) {
 
       <div className="flex-1 overflow-auto px-6">
         <Table className="table-fixed">
-          <TableHeader className="sticky top-0 bg-background z-10">
-            <TableRow>
-              <TableHead className="w-[250px]">File Name</TableHead>
-              <TableHead className="hidden lg:table-cell">Uploaded</TableHead>
-              <TableHead className="hidden lg:table-cell">Size</TableHead>
-              <TableHead>Status</TableHead>
+          <TableHeader className="sticky top-0 z-10 rounded-full bg-black hover:bg-black/80">
+            <TableRow className="text-white bg-black hover:bg-black/80 rounded-full">
+              <TableHead className="w-[250px] text-/40">File Name</TableHead>
+              <TableHead className="hidden lg:table-cell text-white">Uploaded</TableHead>
+              <TableHead className="hidden lg:table-cell text-white">Size</TableHead>
+              <TableHead className="text-white">Status</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {files.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={4}>
-                  <div className="flex flex-col items-center justify-center py-8">
-                    <FileText className="size-36 opacity-30 text-gray-600" />
+                  <div className="flex flex-col items-center justify-center pt-12">
+                    <FileText className="size-36 opacity-30 text-black" />
                     <p className="mt-4 text-center text-gray-500 lg:px-28">
                         No files uploaded yet. Start by uploading a PDF document to generate summaries.
                     </p>
@@ -84,11 +84,11 @@ function ContributorsOverviewTable({ files }: { files: File[] }) {
                     <span
                       className={`inline-block rounded-full px-2 py-1 text-xs font-semibold ${
                         file.hasSummary
-                          ? "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400"
-                          : "bg-orange-100 text-orange-600 dark:bg-blue-900/20 dark:text-orange-400"
+                          ? "text-white bg-green-800 dark:bg-green-900/20 dark:text-green-400"
+                          : "text-white bg-red-600 dark:bg-blue-900/20 dark:text-red-400"
                       }`}
                     >
-                      {file.hasSummary ? "Success" : "Processing"}
+                      {file.hasSummary ? "Success" : "Failed"}
                     </span>
                   </TableCell>
                 </TableRow>

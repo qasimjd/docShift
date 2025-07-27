@@ -73,7 +73,7 @@ export async function syncStripeDataToDB(customerId: string) {
       status: subscription.status,
       priceId: priceId,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      currentPeriodEnd: (subscription as any).current_period_end ?? 0,
+      currentPeriodEnd: subscription.days_until_due ?? 0,
       currentPeriodStart: subscription.start_date,
       cancelAtPeriodEnd: subscription.cancel_at_period_end,
       paymentMethod:
