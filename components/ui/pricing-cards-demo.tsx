@@ -6,7 +6,7 @@ const pricingPlans = [
     name: "Free Plan",
     price: "$0",
     period: "/ month",
-    buttonLink: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_MONTHLY,
+    isFree: true,
     features: [
       {
         title: "5 document summaries per month"
@@ -33,7 +33,7 @@ const pricingPlans = [
     name: "Pro Plan (Monthly)",
     price: "$8",
     period: "/ month",
-    paymentLink: process.env.NEXT_PUBLIC_PRO_PLAN_MONTHLY_LINK,
+    priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_BASIC!,
     features: [
       {
         title: "Unlimited document summaries"
@@ -63,7 +63,7 @@ const pricingPlans = [
     name: "Pro Plan (Yearly)",
     price: "$90",
     period: "/ year",
-    paymentLink: process.env.NEXT_PUBLIC_PRO_PLAN_YEARLY_LINK,
+    priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO!,
     features: [
       {
         title: "Everything in the Pro Monthly plan"

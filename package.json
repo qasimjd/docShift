@@ -28,6 +28,7 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-switch": "^1.2.5",
     "@radix-ui/react-tooltip": "^1.2.7",
+    "@stripe/stripe-js": "^7.6.1",
     "@uploadthing/react": "^7.3.2",
     "@upstash/redis": "^1.35.1",
     "ai": "^4.3.17",

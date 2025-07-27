@@ -8,13 +8,14 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { SubscribeButton } from "./subscribe-button";
 
 interface PricingPlan {
     name: string;
     price: string;
     period: string;
     description?: string;
-    paymentLink?: string;
+    priceId?: string;
     features: {
         title: string;
         description?: string;
@@ -23,6 +24,7 @@ interface PricingPlan {
     buttonVariant?: "default" | "outline";
     buttonIcon?: React.ReactNode;
     isPopular?: boolean;
+    isFree?: boolean;
 }
 
 interface PricingProps {
@@ -81,6 +83,7 @@ function Pricing({
                                             </div>
                                         ))}
                                     </div>
+                                    
                                     <SignedOut>
                                         <Button variant={plan.buttonVariant || "outline"} className="gap-4 mt-auto" asChild>
                                             <Link href="/sign-up">
@@ -88,18 +91,25 @@ function Pricing({
                                             </Link>
                                         </Button>
                                     </SignedOut>
+                                    
                                     <SignedIn>
-                                        {plan.paymentLink ? (
-                                            <Button variant={plan.buttonVariant || "outline"} className="gap-4 mt-auto" asChild>
-                                                <Link href={plan.paymentLink || "#"} target="_blank" rel="noopener noreferrer">
-                                                    {plan.buttonText} {plan.buttonIcon}
-                                                </Link>
-                                            </Button>
-                                        ) : (
+                                        {plan.isFree ? (
                                             <Button variant={plan.buttonVariant || "outline"} className="gap-4 mt-auto" asChild>
                                                 <Link href="/dashboard">
                                                     {plan.buttonText} {plan.buttonIcon}
                                                 </Link>
+                                            </Button>
+                                        ) : plan.priceId ? (
+                                            <SubscribeButton 
+                                                priceId={plan.priceId} 
+                                                planName={plan.name}
+                                                buttonText={plan.buttonText}
+                                                buttonVariant={plan.buttonVariant || "outline"}
+                                                buttonIcon={plan.buttonIcon}
+                                            />
+                                        ) : (
+                                            <Button variant={plan.buttonVariant || "outline"} className="gap-4 mt-auto" disabled>
+                                                Coming Soon {plan.buttonIcon}
                                             </Button>
                                         )}
                                     </SignedIn>

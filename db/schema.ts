@@ -38,3 +38,13 @@ export const chatMessages = pgTable("chat_messages", {
     fileIndex: index("file_id_idx").on(table.fileId),
     userIndex: index("user_id_idx").on(table.userId),
 }));
+
+export const subscriptions = pgTable('subscriptions', {
+    userId: uuid("user_id").notNull().references(() => usersTable.id, { onDelete: "cascade" }),
+    subscriptionId: text('subscription_id').notNull().primaryKey(),
+    status: text('status').notNull(),
+    priceId: text('price_id'),
+    cancelAtPeriodEnd: boolean('cancel_at_period_end').notNull(),
+    currentPeriodStart: timestamp('current_period_start').notNull(),
+    currentPeriodEnd: timestamp('current_period_end').notNull(),
+});

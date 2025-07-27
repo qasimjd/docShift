@@ -3,6 +3,7 @@ import ActivityWrapper from '@/components/ActivityWrapper'
 import { CreditInfo } from '@/components/ui/activity-card'
 import FileUploadSection from '@/components/FileUploadSection'
 import { getFilesByUser } from '@/actions/file.action'
+import { SubscriptionStatus } from '@/components/subscription-status'
 
 const dashboardPage = async () => {
 
@@ -31,11 +32,13 @@ const dashboardPage = async () => {
 
                         {/* Statistics Card */}
                         <section className="w-full">
-                            <ActivityWrapper
+                            {/* <ActivityWrapper
                                 creditInfo={creditInfo}
                                 category="Account"
                                 title="Remaining Credits"
-                            />
+                            /> */}
+
+                                <SubscriptionStatus />
                         </section>
                     </div>
 
