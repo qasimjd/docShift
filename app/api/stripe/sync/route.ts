@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs/server';
 import { syncStripeDataToDB } from '@/lib/stripe-utils';
 import { db } from '@/db';
 import { usersTable } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 
-export async function POST(req: NextRequest) {
+export async function POST() {
   try {
     const { userId } = await auth();
     if (!userId) {

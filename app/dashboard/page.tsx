@@ -1,18 +1,18 @@
 import ContributorsOverviewTable from '@/components/ui/contributors-overview-table'
-import ActivityWrapper from '@/components/ActivityWrapper'
-import { CreditInfo } from '@/components/ui/activity-card'
+// import ActivityWrapper from '@/components/ActivityWrapper'
+// import { CreditInfo } from '@/components/ui/activity-card'
 import FileUploadSection from '@/components/FileUploadSection'
 import { getFilesByUser } from '@/actions/file.action'
 import { SubscriptionStatus } from '@/components/subscription-status'
 
 const dashboardPage = async () => {
 
-    const creditInfo: CreditInfo = {
-        remaining: 4,
-        total: 5,
-        label: "API Credits",
-        resetDate: "Jan 15, 2025"
-    };
+    // const creditInfo: CreditInfo = {
+    //     remaining: 4,
+    //     total: 5,
+    //     label: "API Credits",
+    //     resetDate: "Jan 15, 2025"
+    // };
 
     const userFiles = await getFilesByUser();
 
