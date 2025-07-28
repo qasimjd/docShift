@@ -18,7 +18,7 @@ const pricingPlans = [
         title: "Upload PDF files"
       },
       {
-        title: "No Q&A or advanced insights"
+        title: "No Q&A or on document"
       },
       {
         title: "No history tracking"
@@ -42,10 +42,10 @@ const pricingPlans = [
         title: "AI-powered Q&A over your documents"
       },
       {
-        title: "Summary history & version tracking"
+        title: "AI Summary"
       },
       {
-        title: "Export summaries as text or PDF"
+        title: "AI powered chat over your documents"
       },
       {
         title: "Priority processing speed"

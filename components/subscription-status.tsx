@@ -8,11 +8,13 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from 'next/link';
 import { Crown, Calendar, AlertCircle, Sparkles, ArrowUpRight } from 'lucide-react';
+import { Progress } from './ui/progress';
 
 interface SubscriptionData {
   user: {
     plan: string;
     stripeCustomerId: string | null;
+    credits?: number;
   };
   subscription: {
     status: string;
@@ -33,7 +35,7 @@ export function SubscriptionStatus() {
         setLoading(false);
         return;
       }
-      
+
       try {
         const response = await fetch('/api/stripe/subscription');
         if (response.ok) {
@@ -110,6 +112,7 @@ export function SubscriptionStatus() {
   const isPro = subscription.user.plan === 'pro';
   const isFree = subscription.user.plan === 'free';
   const isCanceling = subscription.subscription?.cancelAtPeriodEnd;
+  const credits = subscription.user.credits ?? 0;
 
   const getStatusVariant = () => {
     if (isActive && !isCanceling) return 'default';
@@ -154,7 +157,7 @@ export function SubscriptionStatus() {
             </p>
           </div>
         </div>
-        
+
         <Badge variant={getStatusVariant()} className="text-xs">
           {getStatusText()}
         </Badge>
@@ -162,19 +165,32 @@ export function SubscriptionStatus() {
 
       {/* Content */}
       <div className="space-y-3 mb-5">
-        <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+        <div className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
           {isPro ? (
             <>
-              You&apos;re currently on the <strong>Pro plan</strong> with access to all premium features, 
+              You&apos;re currently on the <strong>Pro plan</strong> with access to all premium features,
               priority support, and unlimited usage.
             </>
           ) : (
             <>
-              You&apos;re on the <strong>Free plan</strong> with basic features. Upgrade to Pro to unlock
-              advanced capabilities, priority support, and remove limitations.
+              You&apos;re on the <strong>Free plan</strong> with basic features and limited credits.
+              <div className='mt-2'>
+                <span className="block text-sm text-slate-600 dark:text-slate-400">
+                  {credits > 0 ? (
+                    <>
+                      You have <strong>{credits}</strong> credit{credits !== 1 ? 's' : ''} remaining out of <strong>3</strong>.
+                    </>
+                  ) : (
+                    <>
+                      <span className="text-red-500 font-medium">No credits available.</span>
+                    </>
+                  )}
+                </span>
+                <Progress value={Math.min((credits / 3) * 100, 100)} className="mt-2" />
+              </div>
             </>
           )}
-        </p>
+        </div>
 
         {subscription.subscription && (
           <div className="flex items-center gap-2 text-sm">
@@ -189,7 +205,7 @@ export function SubscriptionStatus() {
         )}
 
         {isCanceling && (
-          <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800">
+          <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-950/50 border border-black dark:border-amber-800">
             <div className="flex items-start gap-2">
               <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
               <p className="text-xs text-amber-800 dark:text-amber-200">
@@ -202,9 +218,9 @@ export function SubscriptionStatus() {
 
       {/* Action */}
       {isFree && (
-        <Button 
-          asChild 
-          className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white border-0 shadow-sm hover:shadow-md transition-all duration-200"
+        <Button
+          asChild
+          className="w-full hover:shadow-md transition-all duration-200"
         >
           <Link href="/#pricing" className="flex items-center justify-center gap-2">
             Upgrade to Pro

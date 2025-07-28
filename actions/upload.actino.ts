@@ -6,6 +6,7 @@ import { fetchAndExtractPdf } from "@/lib/langchain";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { generateSummaryWithGemini } from "./gemini.action";
+import { deductUserCredits, getUserId } from "./user.action";
 interface PDFFile {
     uploadedBy: string;
     fileUrl: string;
@@ -68,6 +69,16 @@ export const saveFileToDatabase = async (pdfFile: PDFFile, pdfText: string) => {
 
 export const generatePDFSummary = async (pdfFile: PDFFile) => {
 
+    const user = await getUserId();
+
+    if (user.credits <= 0 && user.plan === "free") {
+        return {
+            success: false,
+            message: "You have no AI credits left. Please purchase more to generate summaries.",
+            data: null,
+        };
+    }
+
     if (!pdfFile || !pdfFile.fileUrl) {
         return {
             success: false,
@@ -99,15 +110,16 @@ export const generatePDFSummary = async (pdfFile: PDFFile) => {
                 };
             }
 
-            // Update the saved file with summary
             if (savedFile && summary) {
-                await db.update(pdfFilesTable).set({
-                    summary,
-                    hasSummary: true,
-                    updatedAt: new Date()
-                }).where(eq(pdfFilesTable.id, savedFile.id));
+                await Promise.all([
+                    db.update(pdfFilesTable).set({
+                        summary,
+                        hasSummary: true,
+                        updatedAt: new Date()
+                    }).where(eq(pdfFilesTable.id, savedFile.id)),
+                    deductUserCredits(user.id)
+                ]);
             }
-
             return {
                 success: true,
                 message: "PDF summary generated successfully",

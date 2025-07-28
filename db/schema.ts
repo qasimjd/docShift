@@ -6,6 +6,7 @@ export const usersTable = pgTable("users", {
     email: varchar("email", { length: 256 }).notNull(),
     fullName: varchar("full_name", { length: 256 }),
     imageUrl: text("image_url"),
+    credits: integer("credits").default(3).notNull(),
     plan: varchar("plan", { length: 50 }).default("free"),
     stripeCustomerId: varchar("stripe_customer_id", { length: 255 }),
     stripeSubscriptionId: varchar("stripe_subscription_id", { length: 255 }),

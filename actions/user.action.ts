@@ -60,3 +60,28 @@ export async function getUserId() {
     }
     return databaseUser;
 };
+
+export async function deductUserCredits(userId: string) {
+    const user = await db.query.usersTable.findFirst({
+        where: eq(usersTable.id, userId),
+    });
+
+    if (!user) {
+        throw new Error(`User not found with ID: ${userId}`);
+    }
+
+    if (user.plan === "free") {
+        return;
+    }
+
+    if (user.credits <= 0) {
+        throw new Error("Insufficient credits");
+    }
+
+    const [updatedUser] = await db.update(usersTable)
+        .set({ credits: user.credits - 1 })
+        .where(eq(usersTable.id, userId))
+        .returning();
+
+    return updatedUser;
+}
