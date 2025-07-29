@@ -57,59 +57,122 @@ export function SubscriptionStatus() {
 
   if (loading) {
     return (
-      <Card className="w-full p-6 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <Skeleton className="w-6 h-6 rounded" />
-            <Skeleton className="h-6 w-32" />
-            <Skeleton className="h-5 w-16 rounded-full ml-auto" />
-          </div>
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-3/4" />
-          <Skeleton className="h-10 w-full" />
+      <Card className="w-full p-6 gradient-card transition-colors">
+        {/* Loading Header */}
+        <div className="flex items-center justify-between mb-4">
         </div>
+
+        {/* Loading Content */}
+        <div className="space-y-3 mb-5">
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-4/5" />
+            <Skeleton className="h-4 w-3/4" />
+          </div>
+          
+          {/* Loading Progress Bar */}
+          <div className="mt-4 space-y-2">
+            <Skeleton className="h-3 w-48" />
+            <Skeleton className="h-2 w-full rounded-full" />
+          </div>
+        </div>
+
+        {/* Loading Button */}
+        <Skeleton className="h-10 w-full" />
       </Card>
     );
   }
 
   if (error) {
     return (
-      <Card className="w-full p-6 border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950">
-        <div className="flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
-          <div className="flex-1">
-            <h3 className="font-medium text-red-900 dark:text-red-100">
-              Subscription Error
-            </h3>
-            <p className="text-sm text-red-700 dark:text-red-300 mt-1">
-              {error}. Please try refreshing the page or contact support if the issue persists.
-            </p>
+      <Card className="w-full p-6 gradient-card transition-colors border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-950/50">
+        {/* Error Header */}
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-red-100 dark:bg-red-900/30">
+              <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-red-900 dark:text-red-100">
+                Subscription Error
+              </h3>
+              <p className="text-xs text-red-600 dark:text-red-400">
+                Failed to load data
+              </p>
+            </div>
           </div>
+          <Badge variant="destructive" className="text-xs">
+            Error
+          </Badge>
         </div>
+
+        {/* Error Content */}
+        <div className="space-y-3 mb-5">
+          <p className="text-sm text-red-700 dark:text-red-300 leading-relaxed">
+            {error}. Please try refreshing the page or contact support if the issue persists.
+          </p>
+        </div>
+
+        {/* Error Action */}
+        <Button
+          onClick={() => window.location.reload()}
+          variant="outline"
+          className="w-full border-red-300 text-red-700 hover:bg-red-50 dark:border-red-700 dark:text-red-300 dark:hover:bg-red-950/30"
+        >
+          Try Again
+          <ArrowUpRight className="w-4 h-4 ml-2" />
+        </Button>
       </Card>
     );
   }
 
   if (!subscription) {
     return (
-      <Card className="w-full p-6 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
-        <div className="flex items-start gap-3">
-          <Crown className="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" />
-          <div className="flex-1">
-            <h3 className="font-medium text-slate-900 dark:text-slate-100">
-              Subscription Status
-            </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
-              Please sign in to view your subscription details and manage your plan.
-            </p>
+      <Card className="w-full p-6 gradient-card transition-colors">
+        {/* No Data Header */}
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800">
+              <Crown className="w-5 h-5 text-slate-400" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900 dark:text-slate-100">
+                Subscription Status
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                Sign in required
+              </p>
+            </div>
           </div>
+          <Badge variant="secondary" className="text-xs">
+            Unknown
+          </Badge>
         </div>
+
+        {/* No Data Content */}
+        <div className="space-y-3 mb-5">
+          <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            Please sign in to view your subscription details and manage your plan.
+          </p>
+        </div>
+
+        {/* No Data Action */}
+        <Button
+          asChild
+          variant="outline"
+          className="w-full transition-all duration-200"
+        >
+          <Link href="/sign-in" className="flex items-center justify-center gap-2">
+            Sign In
+            <ArrowUpRight className="w-4 h-4" />
+          </Link>
+        </Button>
       </Card>
     );
   }
 
   const isActive = subscription.subscription?.status === 'active';
-  const isPro = subscription.user.plan === 'pro';
+  const isPro = subscription.user.plan === 'pro' || subscription.user.plan === 'basic';
   const isFree = subscription.user.plan === 'free';
   const isCanceling = subscription.subscription?.cancelAtPeriodEnd;
   const credits = subscription.user.credits ?? 0;
@@ -150,7 +213,7 @@ export function SubscriptionStatus() {
           )}
           <div>
             <h3 className="font-semibold text-slate-900 dark:text-slate-100">
-              {subscription.user.plan === 'pro' ? 'Pro Plan' : 'Free Plan'}
+              {isPro ? 'Pro Plan' : 'Free Plan'}
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400">
               Current subscription
@@ -205,7 +268,7 @@ export function SubscriptionStatus() {
         )}
 
         {isCanceling && (
-          <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-950/50 border border-black dark:border-amber-800">
+          <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800">
             <div className="flex items-start gap-2">
               <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
               <p className="text-xs text-amber-800 dark:text-amber-200">

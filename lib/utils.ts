@@ -42,3 +42,14 @@ export const formatDate = (date: Date | string | null): string => {
     minute: "2-digit",
   });
 };
+
+
+export const getSubscriptionEndDate = (priceId: string): number => {
+  const endDate = new Date();
+  if (priceId === process.env.STRIPE_PRICE_ID_PRO) {
+    endDate.setFullYear(endDate.getFullYear() + 1);
+  } else {
+    endDate.setMonth(endDate.getMonth() + 1);
+  }
+  return endDate.getTime();
+};

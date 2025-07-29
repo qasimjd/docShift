@@ -43,8 +43,8 @@ function ContributorsOverviewTable({ files }: { files: File[] }) {
 
       <div className="flex-1 overflow-auto px-6">
         <Table className="table-fixed">
-          <TableHeader className="sticky top-0 z-10 rounded-full bg-black hover:bg-black/80">
-            <TableRow className="text-white bg-black hover:bg-black/80 rounded-full">
+          <TableHeader className="bg-black hover:bg-black/80">
+            <TableRow className="text-white bg-black hover:bg-black/80">
               <TableHead className="w-[250px] text-/40">File Name</TableHead>
               <TableHead className="hidden lg:table-cell text-white">Uploaded</TableHead>
               <TableHead className="hidden lg:table-cell text-white">Size</TableHead>
@@ -58,7 +58,7 @@ function ContributorsOverviewTable({ files }: { files: File[] }) {
                   <div className="flex flex-col items-center justify-center pt-12">
                     <FileText className="size-36 opacity-30 text-black" />
                     <p className="mt-4 text-center text-gray-500 lg:px-28">
-                        No files uploaded yet. Start by uploading a PDF document to generate summaries.
+                      No files uploaded yet. Start by uploading a PDF document to generate summaries.
                     </p>
                   </div>
                 </TableCell>
