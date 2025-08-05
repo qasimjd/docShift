@@ -3,7 +3,7 @@ import { db } from '@/db';
 import { usersTable, subscriptions } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import Stripe from 'stripe';
-import { getSubscriptionEndDate } from './utils';
+// import { getSubscriptionEndDate } from './utils';
 
 export type STRIPE_SUB_CACHE =
   | {
@@ -74,7 +74,7 @@ export async function syncStripeDataToDB(customerId: string) {
       status: subscription.status,
       priceId: priceId,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      currentPeriodEnd: subscription.ended_at ?? 0,
+      currentPeriodEnd: subscription.billing_cycle_anchor  ?? 0,
       currentPeriodStart: subscription.start_date,
       cancelAtPeriodEnd: subscription.cancel_at_period_end,
       paymentMethod:
